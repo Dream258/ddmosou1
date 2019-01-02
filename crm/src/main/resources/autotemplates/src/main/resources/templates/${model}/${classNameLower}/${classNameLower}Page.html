@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+${r"<#import"} "../../macro/common.ftl" as common>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>JeeBoom  ${info}${autoInfo.htmlPageTitle}</title>
+        <link rel="stylesheet" href="${r"${springMacroRequestContext.contextPath}"}/static/layui/css/layui.css" />
+        <link rel="stylesheet" href="${r"${springMacroRequestContext.contextPath}"}/static/css/global.css" />
+        <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css" />
+        <style>
+            .layui-table th{
+                text-align: center;
+            }
+            td{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body class="anim-fadeInUp">
+        <div style="margin: 15px;">
+            <div class="layui-tab-brief" >
+                <ul class="layui-tab-title">
+                    <li class="layui-this">${info}${autoInfo.htmlPageTitle}</li>
+                </ul>
+            </div>
+            <form id="searchForm" class="layui-form" method="post" style="margin-top: 20px;">
+                <div class="layui-form-item">
+                    <input type ="hidden" name="pageNo" value="${r"${(pager.pageNo)!}"}">
+                    <input type ="hidden" name="pageSize" value="15">
+                    <#list tableColumns as column>
+                        <#if column.isSelect?? && column.isSelect==1>
+                            <#if column.mdictTitle?? && column.mdictTitle!=''>
+                    <div class="layui-inline">
+                        <select name="${column.name}">
+                            <option value="">${(column.label)!}</option>
+                            ${r"<@common.mdictOptions"} title="${column.mdictTitle}" value="${r"${(" + classNameLower + r"." + column.name + r")!}"}" ${r"/>"}
+                        </select>
+                    </div>
+                            <#else>
+                    <div class="layui-inline">
+                        <input  type = "text" name="${column.name}" value="${r"${(" + classNameLower + r"." + column.name + r")!}"}" placeholder="${(column.label)!}" class="layui-input" />
+                    </div>
+                            </#if>
+                        </#if>
+                    </#list>
+                    <div class="layui-inline">
+                        <button onclick="layui.submitForm()" class="layui-btn">${autoInfo.htmlPageFind}&nbsp;<i class="layui-icon" >&#xe615;</i></button>
+                    </div>
+                    ${r"<@common.permission per='" + model + r":" + classNameLower + r":edit'>"}
+                    <div class="layui-inline">
+                        <a href="javascript:layui.add();" class="layui-btn">${autoInfo.htmlPageAdd}&nbsp;<i class="layui-icon" >&#xe61f;</i></a>
+                    </div>
+                    <div class="layui-inline">
+                        <a href="javascript:layui.delete();" class="layui-btn">${autoInfo.controllerDeleteById}&nbsp;<i class="layui-icon" >&#xe640;</i></a>
+                    </div>
+                    ${r"</@common.permission>"}
+                </div>
+            </form>
+
+            <div style="margin-top: 20px;">
+                <table class="layui-table${((autoTable.isAllStatus?? && autoTable.isAllStatus==1) ||(autoTable.isAllDel?? && autoTable.isAllDel==1) || (autoTable.isAllShow?? && autoTable.isAllShow==1))?string(" layui-form","")}">
+                    <thead>
+                    <tr>
+                        <#if (autoTable.isAllStatus?? && autoTable.isAllStatus==1) ||(autoTable.isAllDel?? && autoTable.isAllDel==1) || (autoTable.isAllShow?? && autoTable.isAllShow==1)>
+                            <th><input type="checkbox" name="" lay-skin="primary" lay-filter="allChoose"></th>
+                        </#if>
+                        <th>序号</th>
+                        <#list tableColumns as column>
+                            <#if column.isList?? && column.isList == 1>
+                                <th>${(column.label)!}</th>
+                            </#if>
+                        </#list>
+                        ${r"<@common.permission per='" + model + r":" + classNameLower + r":edit'>"}
+                        <th>${autoInfo.htmlPageState}</th>
+                        ${r"</@common.permission>"}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    ${r"<#list pager.list as entity>"}
+                    <tr>
+                        <#if (autoTable.isAllStatus?? && autoTable.isAllStatus==1) ||(autoTable.isAllDel?? && autoTable.isAllDel==1) || (autoTable.isAllShow?? && autoTable.isAllShow==1)>
+                            <td><input type="checkbox" name="" lay-skin="primary"></td>
+                        </#if>
+                        <td>${r"${(entity_index+1)!}"}</td>
+                        <#list tableColumns as column>
+                            <#if column.isList?? && column.isList == 1>
+                                <td><#if column_index == 1>${r"<a href="+"\""+r"javascript:layui.showInfo('${(entity.id)!}')"+"\""+r">"}</#if><#if column.type == 'java.util.Date'>${r"<#if entity." + column.name + r"?? >"}${r"${entity." + column.name + r"?string(" + "\"" + r"yyyy年MM月dd日 HH:mm:ss" + "\"" + r")}"}${r"</#if>"}<#elseif column.mdictTitle?? && column.mdictTitle!='' >${r"<@common.mdictInfo"} title='${column.mdictTitle}' value='${r"${(entity." + column.name + r")!}"}' ${r"/>"}<#else>${r"${(entity." + column.name + r")!}"}</#if><#if column_index == 1>${r"</a>"}</#if></td>
+                            </#if>
+                        </#list>
+                        ${r"<@common.permission per='" + model + r":" + classNameLower + r":edit'>"}
+                        <td>
+                            <a href="javascript:layui.edit('${r"${(entity.id)!}"}')" class="layui-btn layui-btn-xs">${autoInfo.htmlPageEdit}</a>
+                            <a href="javascript:layui.del('${r"${(entity.id)!}"}')" class="layui-btn layui-btn-danger layui-btn-xs">${autoInfo.controllerDeleteById}</a>
+                        </td>
+                        ${r"</@common.permission>"}
+                    </tr>
+                        ${r"</#list>"}
+                    </tbody>
+                </table>
+                <div id="pager" class="fr"></div>
+            </div>
+        </div>
+        <script type="text/javascript" src="${r"${springMacroRequestContext.contextPath}"}/static/layui/layui.js"></script>
+        <script>
+            layui.use(['form','laydate','laypage','layer','upload'],function(){
+                var form = layui.form;
+                var laypage = layui.laypage;
+                var layer = layui.layer;
+                var $ = layui.jquery;
+
+                laypage.render({
+                    elem: 'pager',
+                    count: '${r"${(pager.count)!1}"}',
+                    limit: '15',
+                    jump:function(obj,first){
+                        if(!first){
+                            $("input[name=pageNo]").val(obj.curr);
+                            layui.submitForm();
+                        }
+                    }
+                });
+
+                <#if (autoTable.isAllStatus?? && autoTable.isAllStatus==1) ||(autoTable.isAllDel?? && autoTable.isAllDel==1) || (autoTable.isAllShow?? && autoTable.isAllShow==1)>
+                form.on('checkbox(allChoose)', function(data){
+                    var child = $(data.elem).parents('table').find('tbody input[type="checkbox"]');
+                    child.each(function(index, item){
+                        item.checked = data.elem.checked;
+                    });
+                    form.render('checkbox');
+                });
+                </#if>
+
+                <#if autoTable.isAllDel?? && autoTable.isAllDel==1 >
+                layui.delete = function(){
+                    var ids = '';
+                    $('input:checkbox:checked').each(function(){
+                        if($(this).val()!='on'){
+                            ids += $(this).val()+',';
+                        }
+                    });
+                    ids = ids.substring(0,ids.length-1);
+                    layer.msg("${autoInfo.htmlPageDeleteInfo}${info}！", {
+                        btn: ['${autoInfo.htmlPageDelete}', '${autoInfo.htmlPageNoDelete}'],
+                        yes:function(){
+                            window.location.href="${r"${springMacroRequestContext.contextPath}"}/${classNameLower}/delByIds?ids="+ids;
+                        }
+                    });
+                }
+                </#if>
+
+                //${autoInfo.htmlPageFind}
+                layui.submitForm = function(){
+                    $("#searchForm").submit();
+                }
+
+                //${autoInfo.htmlPageShow}
+                layui.showInfo = function(id){
+                    layui.save("${autoInfo.htmlPageShow}${info}",id);
+                }
+
+                //${autoInfo.htmlPageEdit}
+                layui.edit = function(id){
+                    layui.save("${autoInfo.htmlPageEdit}${info}",id)
+                }
+
+                //${autoInfo.htmlPageAdd}
+                layui.add = function(){
+                    layui.save("${autoInfo.htmlPageAdd}${info}");
+                }
+
+                //${autoInfo.htmlPageAdd}or${autoInfo.htmlPageEdit}ifream
+                layui.save = function(title,id){
+                    var url ='${r"${springMacroRequestContext.contextPath}"}/${classNameLower}/saveFrom';
+                    if(id!=null&&id!='undfined'){
+                        url += "?id="+id
+                    }
+                    layer.open({
+                        type: 2,
+                        title:title,
+                        area: ['800px', '500px'],
+                        fixed: false,
+                        maxmin: true,
+                        content: url
+                    });
+                }
+
+                //${autoInfo.htmlPageActive}or${autoInfo.htmlPageInActive}
+                layui.accredit = function(id,status){
+                    var title,b;
+                    if(status == 1){
+                        title = "${autoInfo.htmlPageActiveInfo}${info}！";
+                        b = ['${autoInfo.htmlPageActive}', '${autoInfo.htmlPageQX}'];
+                    }else{
+                        title = "${autoInfo.htmlPageInActiveInfo}${info}！";
+                        b = ['${autoInfo.htmlPageInActive}', '${autoInfo.htmlPageQX}'];
+                    }
+                    layer.msg(title, {
+                        btn: b,
+                        yes:function(){
+                            window.location.href="${r"${springMacroRequestContext.contextPath}"}/${classNameLower}/accredit?id="+id+"&status="+status;
+                        }
+                    });
+                }
+
+                //${autoInfo.htmlPageDelete}
+                layui.del = function(id){
+                    layer.msg("${autoInfo.htmlPageDeleteInfo}${info}！", {
+                        btn: ['${autoInfo.htmlPageDelete}', '${autoInfo.htmlPageNoDelete}'],
+                        yes:function(){
+                            window.location.href="${r"${springMacroRequestContext.contextPath}"}/${classNameLower}/delById?id="+id;
+                        }
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

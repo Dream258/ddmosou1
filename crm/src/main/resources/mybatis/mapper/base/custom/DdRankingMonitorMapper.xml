@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.DdrankingmonitorDAO">
+	<!-- 查询信息 -->
+	<select id="fandMoney" resultType="Ddrankingmonitor">
+		select
+		order_function as orderFunction,
+		original_price as originalPrice,
+		now_price as nowPrice,
+		monitor_baby_num as monitorBabyNum
+		from dd_ranking_monitor where service_cycle = #{serviceCycle} and order_function = #{type}
+	</select>
+</mapper>

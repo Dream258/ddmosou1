@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.DeliverDAO">
+
+    <select id="findList" resultType="com.xxx.model.base.entity.Deliver">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM deliver a
+        <include refid="joins"/>
+        <include refid="where"/>
+        order by a.createtime desc
+    </select>
+
+    <sql id="selectColumns">
+        a.id AS "id",
+        d.name AS "departName",
+        c.name AS "customerName",
+        u.name AS "transferName",
+        s.name AS "receiveName"
+    </sql>
+    <sql id="joins">
+        JOIN sys_department d ON d.id = a.department
+        JOIN customer c ON c.id = a.customer
+        JOIN sys_user u ON u.id = a.transfer
+        JOIN sys_user s ON s.id = a.receive
+    </sql>
+    <sql id="where">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND a.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.department != null">
+                <![CDATA[ AND a.department = #{entity.department} ]]>
+            </if>
+            <if test = "entity.customer != null">
+                <![CDATA[ AND a.customer = #{entity.customer} ]]>
+            </if>
+            <if test = "entity.transfer != null">
+                <![CDATA[ AND a.transfer = #{entity.transfer} ]]>
+            </if>
+            <if test = "entity.receive != null">
+                <![CDATA[ AND a.receive = #{entity.receive} ]]>
+            </if>
+            <if test = "entity.type != null and entity.type != ''">
+                <![CDATA[ AND a.type = #{entity.type} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND a.createtime = #{entity.createtime} ]]>
+            </if>
+        </if>
+    </sql>
+
+</mapper>

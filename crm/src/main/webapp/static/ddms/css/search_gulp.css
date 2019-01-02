@@ -1,0 +1,523 @@
+@charset "utf-8";
+.clear:after, article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block
+}
+
+a:active, a:hover, input, select, textarea {
+    outline: 0
+}
+
+.clear:after, svg:not(:root) {
+    overflow: hidden
+}
+
+hr, img {
+    border: 0
+}
+
+.text-left, body, html {
+    text-align: left
+}
+
+.navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse, .pre-scrollable {
+    max-height: 340px
+}
+
+.glyphicon, .iconfont {
+    -moz-osx-font-smoothing: grayscale
+}
+
+.alert-title, .fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner, .mh_ul > li, .mh_ul > li .mh_te {
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+a, body, dd, div, dl, dt, em, form, h1, h2, h3, h4, h5, h6, img, input, li, ol, option, p, select, span, strong, table, td, textarea, th, ul, var {
+    margin: 0;
+    padding: 0
+}
+
+body, html {
+    -webkit-font-smoothing: antialiased
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse
+}
+
+em, strong, th, var {
+    font-weight: 400;
+    font-style: normal
+}
+
+.clear:after {
+    content: ".";
+    height: 0;
+    clear: both;
+    visibility: hidden
+}
+
+pre, textarea {
+    overflow: auto
+}
+
+body {
+    width: 100%;
+    overflow-x: hidden
+}
+
+/*!
+ * Bootstrap v3.3.0 (http://getbootstrap.com)
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ *//*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+.jd_menu_remove .feedback {
+    margin-top: 150px;
+    margin-left: 15px
+}
+
+.feedback img {
+    width: 100% !important;
+    cursor: pointer
+}
+
+.modal-feedback {
+    max-width: 1000px;
+    width: 100%;
+    margin: 30px auto
+}
+
+#feedbackModal .modal-header {
+    background: #649df7;
+    height: 150px;
+    padding: 0
+}
+
+#feedbackModal .modal-header .head_box {
+    width: 100%;
+    height: 100%;
+    background: url(../images/head.jpg) center center/auto 100% no-repeat
+}
+
+#feedbackModal .modal-header .feedClose {
+    font-size: 28px;
+    color: #fff;
+    margin: 20px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    font-weight: 500;
+    opacity: .5;
+    transition: all .8s ease;
+    cursor: pointer;
+    text-align: center
+}
+
+#feedbackModal .modal-header .feedClose:hover {
+    opacity: 1
+}
+
+#feedbackModal .modal_body_box {
+    max-width: 800px;
+    margin: 0 auto
+}
+
+#feedbackModal .feedback_name .name_block {
+    height: 20px;
+    width: 10px;
+    background: #556CED;
+    margin-right: 5px;
+    float: left
+}
+
+#feedbackModal .feedback_name {
+    padding: 12px 0;
+    font-size: 15px;
+    color: #556CED
+}
+
+#feedbackModal .feedback_option .advise_form {
+    height: 150px;
+    overflow-y: auto
+}
+
+#feedbackModal .feedback_submit {
+    width: 100%;
+    background: #649df7;
+    color: #fff !important;
+    height: 46px;
+    line-height: 46px;
+    padding: 0
+}
+
+#feedbackModal .modal-footer {
+    border: none;
+    padding-bottom: 30px
+}
+
+#feedbackModal .feedback_option .btn-item {
+    background: #FFF;
+    border: 1px solid #C0BDBD;
+    font-size: 14px;
+    color: #0D253E;
+    letter-spacing: 0;
+    margin: 2px
+}
+
+#feedbackModal .btn.active, #feedbackModal .btn.active.focus, #feedbackModal .btn.active:focus, #feedbackModal .btn.focus, #feedbackModal .btn:active.focus, #feedbackModal .btn:active:focus, #feedbackModal .btn:focus {
+    border: 1px solid #556CED;
+    color: #556CED;
+    outline: 0;
+    box-shadow: none
+}
+
+.block_error {
+    display: none;
+    color: red
+}
+
+.flow {
+    position: absolute;
+    top: -7px;
+    right: 0;
+    z-index: 10
+}
+
+.nav_flow {
+    top: -2px;
+    right: -38px
+}
+
+.jd_menu_item .flow {
+    top: 4px
+}
+
+.home-content .flow1 {
+    right: -37px
+}
+
+.flow .only_tips {
+    width: 64px;
+    height: 21px;
+    background: #fd4040;
+    text-align: center;
+    line-height: 21px;
+    font-size: 12px;
+    color: #fff;
+    border-radius: 2px
+}
+
+.jd_menu_item .flow .only_tips {
+    width: 55px
+}
+
+.getScore .modal-wrapper.row .rowTable .table {
+    border-bottom: 1px solid #ddd
+}
+
+.flow.flow1 .only_tips {
+    width: 80px
+}
+
+.only_tips {
+    display: block;
+    position: relative
+}
+
+.flow .only_tips::after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-right: 7px solid #fd4040;
+    border-bottom: 0 solid transparent;
+    display: block;
+    position: absolute;
+    top: 11px;
+    left: -4px
+}
+
+.jd_menu_wrapper {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 70px;
+    z-index: 99;
+    background: #fff
+}
+
+.jd_menu_wrapper.active {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .18)
+}
+
+.jd_menu_wrapper .jd_menu_item:hover {
+    color: #479ef6;
+    font-weight: 700
+}
+
+.jd_menu_wrapper .jd_menu_left {
+    height: 100%;
+    padding: 0
+}
+
+.jd_menu_wrapper .jd_menu_box {
+    height: 100%;
+    line-height: 65px;
+    font-family: PingFangSC-Semibold;
+    font-size: 16px;
+    color: #556CED;
+    letter-spacing: 0;
+    text-align: center;
+    padding: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: inherit !important
+}
+
+.jd_menu_wrapper .jd_menu_item, .jd_menu_wrapper .logo {
+    float: left;
+    text-align: center;
+    cursor: pointer;
+    max-width: 12%;
+    width: 110px;
+    height: 100%;
+    position: relative;
+    display: inline-block;
+    font-size: 15px;
+    color: #535971;
+    letter-spacing: 0
+}
+
+.jd_menu_wrapper .jd_menu_box .logo {
+    width: 60px
+}
+
+.jd_menu_wrapper .jd_menu_box .logo > a {
+    height: 50px;
+    display: inline-block
+}
+
+.jd_menu_wrapper .jd_menu_box .logo > a > img {
+    width: 50px
+}
+
+.jd_menu_wrapper .jd_menu_item.active {
+    color: #556CED;
+    font-weight: 700
+}
+
+.jd_menu_wrapper .jd_menu_item.active::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    height: 5px;
+    width: 100%;
+    background: #556CED
+}
+
+.jd_menu_wrapper .jd_menu_item > .icon, .jd_menu_wrapper .jd_menu_item > i {
+    font-size: 24px;
+    margin: 5px 0 3px
+}
+
+.jd_new {
+    width: 35px !important;
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    z-index: 1
+}
+
+.jd_menu_remove {
+    width: 100px;
+    position: fixed;
+    top: 350px;
+    left: 0;
+    z-index: 99;
+    background: url(http://jdmohe.ufile.ucloud.com.cn/web/zixun.png) center center/100% 100% no-repeat;
+    height: 180px
+}
+
+.jd_menu_remove.active {
+    display: block
+}
+
+.jd_menu_remove .jd_remove_item {
+    text-align: center;
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    color: #fff;
+    float: right;
+    margin-top: 60px;
+    background: #556CED
+}
+
+.jd_menu_remove .jd_remove_item > .iconfont {
+    font-size: 30px;
+    color: #fff;
+    line-height: 50px;
+    margin: 10px 0 5px
+}
+
+.jd_menu_wrapper .jd_menu_item h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0
+}
+
+/*//咨询*/
+
+.consult-wrapper {
+    display: none;
+    width: 200px;
+    color: #666;
+    background: #fff;
+    text-align: center;
+    top: 158px;
+    left: 102px;
+    position: fixed;
+    padding: 10px 0 20px;
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .1);
+    z-index: 999
+}
+
+.consult-phone {
+    float: right;
+    margin-left: 8px
+}
+
+.link_a {
+    float: right;
+    font-size: 26px;
+    margin-right: 35px;
+    margin-top: -2px;
+    color: #556CED !important;
+    position: relative
+}
+
+.link_a .link_arrow {
+    border: 8px solid transparent;
+    border-bottom: 16px solid #ff5400;
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 25px;
+    left: 0;
+    cursor: pointer
+}
+
+.icon-phone.money-phone {
+    float: right;
+    margin-right: 15px
+}
+
+.menu-phone-item .glyphicon.glyphicon-home {
+    font-size: 19px
+}
+
+.consult-phone-wrapper h3 {
+    color: #556CED;
+    margin-bottom: 0
+}
+
+.consult-phone-btn .btn img {
+    width: 18px;
+    margin-right: 10px
+}
+
+.consult-phone-wrapper .qq-text {
+    font-size: 14px;
+    color: #556CED;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #BFBFBF
+}
+
+.consult-phone-wrapper .weixin-text {
+    margin-top: 30px;
+    padding: 3px 0
+}
+
+.consult-phone-wrapper .weixin-text > img {
+    width: 18px
+}
+
+.consult-phone-wrapper .erweima-text > .wechartCode {
+    width: 110px;
+    height: 110px
+}
+
+.consult-phone-wrapper .erweima-text > .wechartCode table {
+    margin: 2px auto
+}
+
+.consult-phone-wrapper .erweima-text1 {
+    font-size: 14px;
+    color: #556CED
+}
+
+.consult-phone-wrapper .consult-phone-btn .btn {
+    background: #F5F5F5;
+    border: 1px solid #D8D8D8;
+    width: 143px;
+    height: 40px;
+    border-radius: 0;
+    margin: 30px 0 10px;
+    outline: 0
+}
+
+/*weixinQQ*/
+.consult-phone-wrapper h3 {
+    color: #556CED;
+    margin-bottom: 0
+}
+
+.consult-phone-btn .btn img {
+    width: 18px;
+    margin-right: 10px
+}
+
+.consult-phone-wrapper .qq-text {
+    font-size: 14px;
+    color: #556CED;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #BFBFBF
+}
+
+.consult-phone-wrapper .weixin-text {
+    margin-top: 30px;
+    padding: 3px 0
+}
+
+.consult-phone-wrapper .weixin-text > img {
+    width: 18px
+}
+
+.consult-phone-wrapper .erweima-text > .wechartCode {
+    width: 110px;
+    height: 110px
+}
+
+.consult-phone-wrapper .erweima-text > .wechartCode table {
+    margin: 2px auto
+}
+
+.consult-phone-wrapper .erweima-text1 {
+    font-size: 14px;
+    color: #556CED
+}
+
+.consult-phone-wrapper .consult-phone-btn .btn {
+    background: #F5F5F5;
+    border: 1px solid #D8D8D8;
+    width: 143px;
+    height: 40px;
+    border-radius: 0;
+    margin: 30px 0 10px;
+    outline: 0
+}

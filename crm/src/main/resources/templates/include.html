@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <header th:fragment="header">
+        <!--公共头部-->
+        <div class="dd_header_wrap row">
+            <div class="nav_box_hea">
+                <!--pc端-->
+                <div class="nav_box">
+                    <a href="#"><div class="pull-left logo_box" title="多多魔搜 ">
+                        <img th:src="@{/static/ddms/img/logo.png}" alt="">
+                    </div></a>
+                    <ul class="nav_header clearfix">
+                        <li class="nav_item active" id="home"><a href="/api/">查排名</a></li>
+                        <li class="nav_item" id="ranking"><a href="/api/ranking">排名监控</a></li>
+                        <li class="nav_item" id="remark_cj"><a href="">评价监控</a>
+                            <div class="flow flow1">
+                                <span class="only_tips">批量备注</span>
+                            </div></li>
+                        <li class="nav_item next" id="shop"><a href="javascript:;">店铺监控<span>（开发中）</span></a>
+                            <div class="flow hidden">
+                                <span class="only_tips">开发中</span>
+                            </div></li>
+                        <li class="nav_item next" id="sales"><a href="javascript:;">销量监控<span>（开发中）</span></a></li>
+                        <li class="nav_item next" id="group"><a href="javascript:;">热词分析<span>（开发中）</span></a></li>
+                        <li class="nav_item next" id="group1"><a href="javascript:;">黑科技<span>（开发中）</span></a></li>
+                        <!--li class="nav_item" id="shop"><a href="/monitor/shop">店铺监控</a></li>
+                            <li class="nav_item" id="sales"><a href="/monitor/sales">销量监控</a></li>
+                            <li class="nav_item" id="group"><a href="/monitor/group">热词分析</a></li>
+                            <li class="nav_item hidden"><a href="javascript:;">综合分析</a></li-->
+
+                    </ul>
+                </div>
+                <!--<c:choose>-->
+                <div th:if="${session.user_login!=null }">
+                    <!--<c:when test="${sessionScope.user_login!=null }">-->
+                    <div class="user_header_box" style="display: block;">
+                        <div class="user_item nav_item" id="user">
+                            <a href="/api/center">
+                                <div class="iconfont icon-icon-user"></div> 用户中心
+                            </a>
+                        </div>
+                        <!--<div class="user_item nav_item hidden" id="user_vip">-->
+                        <!--<a href="javascript:;">-->
+                        <!--<div class="iconfont icon-zuanshi"></div> 升级会员-->
+                        <!--</a>-->
+                        <!--</div>-->
+                        <div class="user_item nav_item" id="user_vip">
+                            <a href="/member-center/index.html">
+                                <div class="label_box">
+                                <span class="label label-info user_level" th:if="${session.user_login.userType==1 }">
+                                       普通会员
+                                </span>
+                                    <span class="label label-info user_level" th:if="${session.user_login.userType==2 }">
+                                        VIP会员
+                                </span>
+                                </div> <span class="user_name red_span" th:text="${session.user_login.userTelephone }" ></span>
+                            </a>
+                        </div>
+                        <div class="user_item nav_item" id="user_off">
+                            <a href="javascript:exit()">
+                                <div class="iconfont icon-tuichu"></div> 退出登录
+                            </a>
+                        </div>
+                    </div>
+                    <!--</c:when>-->
+                </div>
+                <div th:if="${session.user_login==null }">
+                    <!--<c:otherwise>-->
+                    <div class="user_header_box user_header_box_login"
+                         style="display: block;">
+                        <button class="hea_login login_btn btn active">登录</button>
+                        <button class="hea_login register_btn btn">注册</button>
+                        <a class="hea_login btn" th:href="@{login}">后台登录</a>
+                    </div>
+                </div>
+                <!--</c:otherwise>-->
+                <!--</c:choose>-->
+            </div>
+        </div>
+        <div class="ranking-wrapper login-wrapper">
+            <div class="row loginBox">
+                <div class="jd-form-wrapper">
+                    <div class="jd_form_loading">
+                        <b style="margin: auto">努力加载中...</b>
+                    </div>
+                    <i class="login-close iconfont icon-17cuowu"></i>
+                    <div class="row login-form-title">
+                        <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: right">
+                            <span class="active jd-login-btn">登录</span>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <span class="jd-register-btn">注册</span>
+                        </div>
+                    </div>
+                    <!--登录-->
+                    <div class="login-form">
+                        <div class="login-input-wrapper">
+                            <input type="text" id="login-user"
+                                   class="form-control login-form-input input" placeholder="请输入用户名"
+                                   required="required">
+                        </div>
+                        <div class="login-input-wrapper">
+                            <input type="password" id="login-password"
+                                   class="form-control login-form-input input" placeholder="请输入密码"
+                                   required="required">
+                        </div>
+                        <div class="login-input-wrapper">
+                            <button class="btn login-submit">确定</button>
+                            <br> <a href="javascript:;" class="forget-btn">忘记密码?</a>
+                        </div>
+                    </div>
+                    <!-- 注册 -->
+                    <div class="register-form">
+                        <div class="login-input-wrapper">
+                            <input type="text" id="register-user" class="form-control login-form-input input" placeholder="请输入手机号">
+                        </div>
+                        <div class="login-input-wrapper before-input" >
+                            <input type="text" id="register-tp" class="form-control login-form-input input input1" placeholder="请输入图片验证码" style="width:50%;display: inline-block">
+                            <!-- <input type="text" id="input" /> --> <input type="button" id="code"
+                                                                             style="width: 48%;height:35px;display:inline-block" title='点击更换验证码' /><br>
+                        </div>
+                        <!-- <div class="login-input-wrapper before-input">
+                                <input type="text" id="register-tp" class="form-control login-form-input input input1" placeholder="请输入图片验证码" style="width:50%;display: inline-block">
+                                <img id="code-img" src="/NiuBaKeweb/user/code.do" alt="" style="width: 28%;height:34px;">
+                                <a id="code-btn" href="javascript:changeImg()" style="width: 18%;display:inline-block">换一张</a>
+                            </div> -->
+                        <!--<div class="login-input-wrapper before-input">-->
+                        <!--<input type="text" id="register-info" class="form-control login-form-input input input1" placeholder="请输入短信验证码" style="width:50%;display: inline-block">-->
+                        <!--<button class="btn register-phone-btn" style="width: 48%;border: 1px solid #556CED;background: #fff;color: #556CED;height: 34px;">-->
+                        <!--获取验证码-->
+                        <!--</button>-->
+                        <!--</div>-->
+                        <div class="login-input-wrapper">
+                            <input type="password" id="register-password" class="form-control login-form-input input" placeholder="请输入密码"><br>
+                        </div>
+                        <div class="login-input-wrapper">
+                            <input type="password" id="register-password1"
+                                   class="form-control login-form-input input" placeholder="请再次输入密码">
+                        </div>
+
+                        <div class="login-input-wrapper before-input next-input">
+                            <button class="btn register-next">下一步</button>
+                        </div>
+
+                        <div class="login-input-wrapper">
+                            <button class="btn register-submit" onClick="validate()">立即注册</button>
+                            <!-- <div>
+                                <a href="javascript:;" class="before-btn">上一步</a>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="jd-form-wrapper form-forget">
+                    <div class="jd_form_loading">
+                        <b style="margin: auto">努力加载中...</b>
+                    </div>
+                    <div class="login-form">
+                        <div class="row">
+                            <div class="col-md-12" style="position: relative;">
+							<span class="forget-back"> <i class="iconfont icon-fanhui"></i>
+							</span>
+                                <h3 style="color: #556CED">忘记密码</h3>
+                            </div>
+                        </div>
+                        <div class="login-input-wrapper">
+                            <input type="text" id="forget-user"
+                                   class="form-control login-form-input input" placeholder="请输入用户名">
+                        </div>
+                        <div class="login-input-wrapper">
+                            <input type="text" id="forget-code"
+                                   class="form-control login-form-input input input1"
+                                   placeholder="请输入验证码" style="width: 50%; display: inline-block">
+                            <button class="btn" id="forget-code-btn"
+                                    style="width: 48%; border: 1px solid #556CED; background: #fff; color: #556CED; height: 34px;">
+                                获取验证码</button>
+                        </div>
+                        <div class="login-input-wrapper">
+                            <input type="password" id="forget-password"
+                                   class="form-control login-form-input input" placeholder="请输入密码">
+                        </div>
+                        <div class="login-input-wrapper">
+                            <input type="password" id="forget-password1"
+                                   class="form-control login-form-input input" placeholder="请再次输入密码">
+                        </div>
+                        <div class="login-input-wrapper">
+                            <button class="btn forget-submit">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+</body>
+</html>

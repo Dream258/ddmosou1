@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.AutoDdRebatelogDAO">
+    <!-- 返回值映射map -->
+    <resultMap id="ddRebatelogMapper" type="com.xxx.model.base.entity.DdRebatelog">
+        <result property="id" column="id" />
+        <result property="userTelephoneF" column="user_telephone_f" />
+        <result property="userTelephoneS" column="user_telephone_s" />
+        <result property="createTime" column="create_time" />
+    </resultMap>
+
+    <!-- 分页查询数据集合 -->
+    <select id="selectListByPage" resultMap="ddRebatelogMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+        <if test="pager!=null">
+            <include refid="pagination_tail" />
+        </if>
+    </select>
+
+    <!-- 查询总数量 -->
+    <select id="selectCount" resultType="long">
+        <include refid="count_Tail"/>
+        <include refid="where_fragement"/>
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectOne" resultMap="ddRebatelogMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectById" resultMap="ddRebatelogMapper" >
+        <include refid="selectAllColumns"/>
+        WHERE record.id = #{id}
+    </select>
+
+    <!-- 新增新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.xxx.model.base.entity.DdRebatelog">
+        INSERT INTO dd_rebatelog(
+            user_telephone_f,
+            user_telephone_s,
+            create_time
+        ) values (
+            #{userTelephoneF},
+            #{userTelephoneS},
+            #{createTime}
+        )
+    </insert>
+
+    <!-- 修改(通过ID只对不为空的内容进行修改) -->
+    <update id="updateNotNull" parameterType="com.xxx.model.base.entity.DdRebatelog">
+        UPDATE dd_rebatelog record
+        <include refid="update_fragement"/>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改(通过ID更新所有属性值) -->
+    <update id="updateParams" parameterType="com.xxx.model.base.entity.DdRebatelog">
+        UPDATE dd_rebatelog record
+        <set>
+            record.user_telephone_f = #{userTelephoneF},
+            record.user_telephone_s = #{userTelephoneS},
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过ID删除信息 -->
+    <delete id="deleteById">
+        DELETE FROM dd_rebatelog
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 通过IDS批量删除 -->
+    <delete id="deleteByIds">
+        DELETE FROM dd_rebatelog
+        WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- /////////////////// PUBLIC SQL STR ////////////////// -->
+
+    <!-- 查询数量公共sql -->
+    <sql id="count_Tail">
+        SELECT count(1) FROM dd_rebatelog record
+    </sql>
+
+    <!-- 分页公共sql -->
+    <sql id="pagination_tail">
+        <if test="pager.orderBy != null and pager.orderBy != ''">
+            ORDER  BY  ${pager.orderBy}
+        </if>
+        limit #{pager.index} , #{pager.pageSize}
+    </sql>
+
+    <!-- 查询字段公共sql -->
+    <sql id="selectAllColumns">
+        <![CDATA[
+			SELECT
+				id,
+				user_telephone_f,
+				user_telephone_s,
+				create_time
+			FROM dd_rebatelog record
+		]]>
+    </sql>
+
+    <sql id="where_fragement">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND record.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.userTelephoneF != null and entity.userTelephoneF != ''">
+                <![CDATA[ AND record.user_telephone_f = #{entity.userTelephoneF} ]]>
+            </if>
+            <if test = "entity.userTelephoneS != null and entity.userTelephoneS != ''">
+                <![CDATA[ AND record.user_telephone_s = #{entity.userTelephoneS} ]]>
+            </if>
+            <if test = "entity.createTime != null">
+                <![CDATA[ AND record.create_time = #{entity.createTime} ]]>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 公共修改sql-->
+    <sql id="update_fragement">
+        <set>
+            <if test = "userTelephoneF != null and userTelephoneF != ''">
+                record.user_telephone_f = #{userTelephoneF},
+            </if>
+            <if test = "userTelephoneS != null and userTelephoneS != ''">
+                record.user_telephone_s = #{userTelephoneS},
+            </if>
+        </set>
+    </sql>
+    <!-- /////////////////// PUBLIC SQL END ////////////////// -->
+</mapper>

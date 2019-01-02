@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>拼多多查排名_拼多多排名查询_拼多多魔盒 拼多多直通车查询平台</title>
+    <meta name="keyword" content="拼多多排名查询 拼多多查排名 拼多多排名查询软件 拼多多排名查询工具 拼多多直通车查询 拼多多关键词排名查询">
+    <meta name="description" content="拼多多查排名平台是拼多多排名查询软件 拼多多排名查询工具,提供拼多多排名查询,拼多多直通车查询,拼多多关键词直通车查询,便于商家优化拼多多排名">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link th:href="@{/static/ddms/img/logo.png}" type="image/x-icon" rel="shortcut icon">
+    <meta name="csrf-param" content="_csrf-frontend">
+    <meta name="csrf-token" content="mfc2Qp_piabs6-GiEFWucEt5pXjk7aFi8qPKfTgOX9OvpFwE6Yb91rndpMlZBsQveS3QEbar6lOez4VEc1gPmQ==">
+    <link th:href="@{/static/ddms/css/main1.css}" rel="stylesheet">
+    <link th:href="@{/static/ddms/css/login.css}" rel="stylesheet">
+    <link th:href="@{/static/ddms/css/search_gulp.css}" rel="stylesheet">
+    <link th:href="@{/static/ddms/css/bootstrap/swiper-3.4.2.min.css}" rel="stylesheet">
+    <link th:href="@{/static/ddms/css/user.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/static/ddms/jquery/jquery-1.4.4.min.js}"></script>
+    <style type='text/css'>
+        #code {
+            font-family: Arial, 宋体;
+            font-style: italic;
+            color: green;
+            border: 0;
+
+
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+<header th:include="include :: header"></header>
+
+<!-- Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel">
+    <div class="modal-feedback" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="head_box">
+                    <div class="close feedClose" data-dismiss="modal" aria-label="Close"><span>×</span></div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal_body_box row">
+                    <div class="row">
+                        <div class="feedback_name"><div class="name_block"></div>意见所属类别</div>
+                        <div class="feedback_option">
+                            <button class="btn btn-item active" data-status="1">我要新功能</button>
+                            <button class="btn btn-item" data-status="2">错误信息</button>
+                            <button class="btn btn-item" data-status="3">产品建议</button>
+                            <button class="btn btn-item" data-status="4">吐槽</button>
+                            <button class="btn btn-item" data-status="5">其他</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="feedback_name"><div class="name_block"></div>反馈内容</div>
+                        <div class="feedback_option">
+                            <textarea type="text" class="form-control advise_form" id="content" placeholder="写下您希望增加的新功能，或者对魔盒的意见或建议。（一经采用将会给您予以积分奖励）"></textarea>
+                            <div class="block_error" for="content"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="feedback_name"><div class="name_block"></div>联系方式<b style="font-size:12px">(非必填)</b></div>
+                        <div class="feedback_option">
+                            <input class="form-control" type="phone" id="contact" placeholder="留下电话或邮箱，方便我们联系您哦">
+                            <div class="block_error" for="content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="modal_body_box row">
+                    <div class="row">
+                        <button type="button" class="btn feedback_submit">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="jd_menu_remove">
+    <div class="jd_remove_item">
+        <i class="iconfont icon-kefu icon"></i><br>
+        咨询
+    </div>
+    <div class="feedback tada hidden" id="feedback" data-toggle="modal" data-target="#feedbackModal">
+        <!--img src="http://jdmohe.ufile.ucloud.com.cn/web/feedback.png">
+        <img src="http://jdmohe.ufile.ucloud.com.cn/web/feedback1.png"-->
+    </div>
+</div>
+<div class="consult-wrapper" style="display: none;">
+    <div class="header-phone-close">
+        <i class="icon consult-phone-close iconfont icon-cuowu"></i>
+    </div>
+    <div class="consult-phone-wrapper">
+        <h3>联系我们</h3>
+        <div class="consult-phone-btn">
+            <button class="btn"><img src="../img/QQ.png">QQ咨询</button>
+        </div>
+        <div class="qq-text">
+
+        </div>
+        <div class="weixin-text">
+            扫一扫&nbsp;<img src="../img/weixin.png">&nbsp;加微信
+        </div>
+        <div class="erweima-text">
+            <img class="wechartCode" src="/images/we.jpg">
+        </div>
+        <div class="erweima-text1">
+
+        </div>
+    </div>
+</div>
+
+
+<div class="dd_content_wrap dd_container">
+
+    <div class="user_menu">
+        <div class="row" style="padding:10px;">
+            <h4 style="text-align: center;padding: 10px 0;">个人中心</h4>
+            <div class="user_name_box">
+                <div class="name_left">
+                    <i class="iconfont icon-icon-user"></i>
+                </div>
+                <div class="name_right clearfix">
+                    <p class="user_name_text user_name" th:text="${session.user_login.userTelephone}"></p>
+                    <p class="user_vip_text"><i class="iconfont icon-zuanshi"></i>
+                        <span class="user_level" th:if="${session.user_login.userType==1 }">
+                	        普通用户
+                        </span>
+                        <span class="user_level" th:if="${session.user_login.userType==2 }">
+                		    VIP会员
+                        </span>
+                        <a class="pull-right btn" href="#">升级续费</a></p>
+                </div>
+            </div>
+            <div class="row score_box score_box1">
+                <div class="score_inner">
+                    <div class="hidden" data-toggle="tooltip" data-placement="top" title="" data-original-title="查排名会员到期时间">查排名：<span class="rank_end_at blue_span">限时免费</span></div>
+                    <!-- <div data-toggle="tooltip" data-placement="top" title="" data-original-title="排名监控会员到期时间">排名监控：<span class="monitor_end_at blue_span">未开通</span></div> -->
+                    <!-- <div data-toggle="tooltip" data-placement="top" title="" data-original-title="备注插件会员到期时间">插件下载：<span class="plug_end_at blue_span">未开通</span></div> -->
+                    <!--  <div data-toggle="tooltip" data-placement="top" title="" data-original-title="排名监控会员到期时间">店铺监控：<span class="monitor_end_at blue_span">未开通</span></div>
+                    <div data-toggle="tooltip" data-placement="top" title="" data-original-title="排名监控会员到期时间">销量监控：<span class="monitor_end_at blue_span">未开通</span></div>
+                    <div data-toggle="tooltip" data-placement="top" title="" data-original-title="排名监控会员到期时间">热词分析：<span class="monitor_end_at blue_span">未开通</span></div>  -->
+                </div>
+            </div>
+            <div class="row score_box">
+                账号余额：<span class="blue_span balance" th:text="${session.user_login.userGold }"></span>&nbsp;&nbsp;金币
+                <a class="btn" href="javascript:share()">查看明细</a>
+            </div>
+        </div>
+        <div>
+            <hr style="border: 1px dashed #C4C4C4;margin-top: 0;margin-bottom: 10px;">
+
+            <div class="row">
+                <ul class="nav_user_list">
+                    <li class="user_li active" id="user_index">
+                        <a href="#">
+                            <i class="iconfont icon-wxbmingxingdianpu"></i>
+                            <span>我的首页</span>
+                        </a>
+                    </li>
+                    <li class="user_li" id="user_share">
+                        <!--<a th:href="@{subordinate}">-->
+                        <a href="javascript:share()">
+                            <i class="iconfont icon-shichangtuiguang"></i>
+                            <span>邀请好友</span>
+                            <div class="flow">
+                                <span class="only_tips">邀请返利</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="user_li" id="user_buy">
+                        <a href="javascript:buy()">
+                            <i class="iconfont icon-jilu"></i>
+                            <span>购买记录</span>
+                        </a>
+                    </li>
+                    <li class="user_li" id="user_set">
+                        <a th:href="@{setpwd}">
+                            <i class="iconfont icon-shezhi"></i>
+                            <span>修改密码</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>    <div class="user_wrap">
+    <h4 class="user_num_hea">数据概况</h4>
+    <p class="fun_title hidden">当前开启 <span class="blue_span pay_num">1</span> 个付费功能，即将到期功能 <span class="blue_span expire_num">0</span> 个，待开启 <span class="blue_span wait_pay_num">0</span> 个付费功能</p>
+    <div class="swiper-container user_number row swiper-container-horizontal">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide swiper-slide-active" style="width: 176.875px; margin-right: 20px;">
+                <a href="../ranking.jsp"><div class="icon_box"><img src="http://jdmohe.ufile.ucloud.com.cn/web/ranking_icon.png"></div></a>
+                <div class="number_box">
+                    <div class="number rank_limit">1个</div>
+                    <p>排名监控</p>
+                </div>
+                <div class="bottom">到期时间：
+                    <span class="monitor_end_at" th:if="${session.days>0 }">
+                    	<a th:text="${session.days }"></a>天
+                    </span>
+                    <span class="monitor_end_at" th:if="${session.days==0 }">
+                    	0天
+                    </span>
+                    <span class="monitor_end_at" th:if="${session.days==null }">
+                    	0天
+                    </span>
+                </div>
+            </div>
+            <div class="swiper-slide swiper-slide-next" style="width: 176.875px; margin-right: 20px;">
+                <div class="icon_box"><img src="http://jdmohe.ufile.ucloud.com.cn/web/pm_icon.png"></div>
+                <div class="number_box">
+                    <div class="number">0个</div>
+                    <p>店铺监控<br><span>(开发中)</span></p>
+                </div>
+            </div>
+            <div class="swiper-slide" style="width: 176.875px; margin-right: 20px;">
+                <div class="icon_box"><img src="http://jdmohe.ufile.ucloud.com.cn/web/weight_icon.png"></div>
+                <div class="number_box">
+                    <div class="number">0个</div>
+                    <p>销量监控<br><span>(开发中)</span></p>
+                </div>
+            </div>
+            <div class="swiper-slide" style="width: 176.875px; margin-right: 20px;">
+                <div class="icon_box"><img src="http://jdmohe.ufile.ucloud.com.cn/web/sales_icon.png"></div>
+                <div class="number_box">
+                    <div class="number">0个</div>
+                    <p>热词分析<br><span>(开发中)</span></p>
+                </div>
+            </div>
+
+        </div>
+        <!-- 如果需要分页器 -->
+        <div class="swiper-pagination"></div>
+
+        <!-- 如果需要导航按钮 >
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div-->
+        <!-- 如果需要滚动条>
+        <div class="swiper-scrollbar"></div -->
+    </div>
+
+    <h4 class="user_num_hea">订购功能</h4>
+    <div class="row fun_btn_group">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="fun_btn" data-key="1"><a href="javascript:;">查排名</a></li>
+            <li role="presentation" class="fun_btn active" data-key="2"><a href="javascript:;">排名监控</a></li>
+            <!-- <li role="presentation" class="fun_btn" data-key="3"><a href="javascript:;">备注插件</a></li> -->
+        </ul>
+        <div class="vip_box">
+
+
+            <div class="vip_wrap ran_col_wrap">
+                <iframe th:src="@{ranking_monitor}"  frameborder="0" scrolling="no" width="100%" height="360" ></iframe>
+
+                <div class="row explain_footer">
+                    <h4>多多魔盒排名监控功能介绍服务内容：</h4>
+                    <p>多多魔盒提供了云服务器搜索模式，监控某个拼多多商品在全网或类目下关键词的排名及其趋势，且可以与竞品做对比。</p>
+                    <h4>使用规则：</h4>
+                    <p><span class="red_span">*</span> 会员服务一经购买，不支持撤回</p>
+                    <p><span class="red_span">*</span> 请在会员期内使用过期作废</p>
+                    <p><span class="red_span">*</span> 若监控宝贝数已达上限，可删除已监控宝贝再次添加</p>
+                </div>
+                <!-- <script src="../js/fandMoney.js"></script> -->
+            </div>
+
+            <div class="vip_wrap ran_wrap" style="display: none;">
+                <iframe th:src="@{check_rank}" frameborder="0" scrolling="no" width="100%" height="360" ></iframe>
+
+                <div class="row explain_footer">
+                    <h4>多多魔盒排名监控功能介绍服务内容：</h4>
+                    <p>多多魔盒提供了云服务器搜索模式，监控某个拼多多商品在全网或类目下关键词的排名及其趋势，且可以与竞品做对比。</p>
+                    <h4>使用规则：</h4>
+                    <p><span class="red_span">*</span> 会员服务一经购买，不支持撤回</p>
+                    <p><span class="red_span">*</span> 请在会员期内使用过期作废</p>
+                    <p><span class="red_span">*</span> 若监控宝贝数已达上限，可删除已监控宝贝再次添加</p>
+                </div>
+            </div>
+            <div class="vip_wrap cj_wrap" style="display: none;">
+                <form action = "../pay/alipay.trade.page.pay.jsp">
+                    <div class="loadingLog" style="display: none;">
+                        <div class="spinner">
+                            <p class="spinner_tips"></p>
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                    </div>
+                    <div class="vip_row">
+                        <div class="item_name">订购功能：</div>
+                        <div class="item_option query_fun_wrap"><span class="fun_item">订单备注插件</span><span class="fun_explain">（帮助商家进行订单批量备注，减少工作量）</span></div>
+                    </div>
+                    <div class="vip_row">
+                        <div class="item_name">功能原价：</div>
+                        <div class="item_option"><span class="price_before">30</span>&nbsp;&nbsp;元</div>
+                    </div>
+                    <div class="vip_row">
+                        <div class="item_name">限时价格：</div>
+                        <div class="item_option"><span class="price" name = "WIDtotal_amount">20</span>&nbsp;&nbsp;元</div>
+                    </div>
+                    <div class="vip_row query_ran">
+                        <div class="item_name">功能使用：</div>
+                        <div class="item_option">
+                            <span><a href="/monitor/remark">下载使用</a></span>
+                        </div>
+                    </div>
+                    <div class="vip_row time_row">
+                        <div class="item_name">服务周期：</div>
+                        <div class="item_option vip_time">
+                            <button class="btn vip_time_btn active" data-key="1">1个月</button>
+                            <button class="btn vip_time_btn" data-key="6">6个月</button>
+                            <button class="btn vip_time_btn" data-key="12">12个月</button>
+                        </div>
+                    </div>
+                    <div class="vip_row">
+                        <div class="item_name">支付方式：</div>
+                        <div class="item_option pay_type">
+                            <button class="btn pay_type_btn active" data-key="1">支付宝</button>
+                            <button class="btn pay_type_btn" data-key="2">账户余额</button>
+                        </div>
+                    </div>
+                    <div class="vip_row" style="margin-top:10px">
+                        <div class="item_name" style="line-height:1">拼多多商家<br>后台登录账号:</div>
+                        <div class="item_option">
+                            <input class="form-control" placeholder="只填写登录用户名" style="width:350px;" id="shopName"><b class="red_span">*(必填)</b>
+                            <p class="red_span cj_p">*注：商家后台登录的<b>用户名</b>必须<b>填写正确</b>，建议使用<b>复制、粘贴</b>，如填写错误<br>造成不能使用插件的情况，请及时联系客服解决</p>
+                        </div>
+                    </div>
+                    <div class="vip_row">
+                        <div class="item_name"></div>
+                        <div class="item_option">
+                            <input type = "submit" class="btn vip_buy_btn1 vip_buy_btn" data-loading-text="Loading..." autocomplete="off">立即购买</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row explain_footer">
+                    <h4>多多魔盒排名监控功能介绍服务内容：</h4>
+                    <p>多多魔盒提供了云服务器搜索模式，监控某个拼多多商品在全网或类目下关键词的排名及其趋势，且可以与竞品做对比。</p>
+                    <h4>使用规则：</h4>
+                    <p><span class="red_span">*</span> 会员服务一经购买，不支持撤回</p>
+                    <p><span class="red_span">*</span> 请在会员期内使用过期作废</p>
+                    <p><span class="red_span">*</span> 若监控宝贝数已达上限，可删除已监控宝贝再次添加</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script th:src="@{https://hm.baidu.com/hm.js?696697aa5ab99eca019ba08eb7038b52}"></script>
+<script th:src="@{/static/ddms/js/main.js?t=0914}"></script>
+<script th:src="@{/static/ddms/js/login.js?t=?t=0727}"></script>
+<script th:src="@{/static/ddms/js/bootstrap/bootstrap-table.js}"></script>
+<script th:src="@{/static/ddms/js/index.js}"></script>
+<script th:src="@{/static/ddms/js/cite/swiper.min.js}"></script>
+<script th:src="@{/static/ddms/js/user.js}"></script>
+<script th:src="@{/static/ddms/js/_vip.js}"></script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?696697aa5ab99eca019ba08eb7038b52";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    function share() {
+        $.ajax({
+            url:'subordinate',
+            data:"pn=1",
+            type:'POST',
+            success:function(param){
+                if(param == 1){
+                    window.location.href = "share_list";
+                }else{
+                    alertError(param.msg)
+                }
+            },
+            error:function(){
+                alertError('系统错误')
+            }
+        });
+    }
+    function exit() {
+        $.ajax({
+            url:'exituser',
+            type:'POST',
+            success:function(param){
+                if(param == 1){
+                    window.location.href = "/api/";
+                }else{
+                    alertError(param.msg)
+                }
+            },
+            error:function(){
+                alertError('系统错误')
+            }
+        });
+    }
+    function buy() {
+        $.ajax({
+            url:'selectOrders',
+            type:'POST',
+            success:function(param){
+                if(param == 1){
+                    window.location.href = "buylist";
+                }else{
+                    alertError(param.msg)
+                }
+            },
+            error:function(){
+                alertError('系统错误')
+            }
+        });
+    }
+</script>
+<div class="tool">
+    <div class="backTop">
+        <div class="iconRow"></div>
+        <i class="glyphicon glyphicon-arrow-up iconArrow"></i>
+    </div>
+    <div id="particles-js"
+         style="position: absolute; top: 0px; left: 0px; z-index: -1;">
+        <canvas class="particles-js-canvas-el" width="758" height="379"
+                style="width: 100%; height: 100%;"></canvas>
+    </div>
+    <div class="alert-title success">
+        <i class="glyphicon glyphicon-ok-circle" style="color: #5cb85c;"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span></span>
+    </div>
+    <div class="alert-title error">
+        <i class="glyphicon glyphicon glyphicon-remove-circle"
+           style="color: #c9302c;"></i>&nbsp;&nbsp;&nbsp;&nbsp; <span></span>
+    </div>
+    <div class="alert-title info">
+        <i class="glyphicon glyphicon-info-sign" style="color: #f0ad4e;"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+        <span></span>
+    </div>
+</div>
+</body>
+</html>

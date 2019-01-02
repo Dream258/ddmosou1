@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.AutoProductDAO">
+    <!-- 返回值映射map -->
+    <resultMap id="productMapper" type="com.xxx.model.base.entity.Product">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="custodian" column="custodian" />
+        <result property="type" column="type" />
+        <result property="scale" column="scale" />
+        <result property="rate" column="rate" />
+        <result property="start" column="start" />
+        <result property="end" column="end" />
+        <result property="partnership" column="partnership" />
+        <result property="point" column="point" />
+        <result property="details" column="details" />
+        <result property="disclosure" column="disclosure" />
+        <result property="halt" column="halt" />
+        <result property="createtime" column="createtime" />
+    </resultMap>
+
+    <!-- 分页查询数据集合 -->
+    <select id="selectListByPage" resultMap="productMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+        <if test="pager!=null">
+            <include refid="pagination_tail" />
+        </if>
+    </select>
+
+    <!-- 查询总数量 -->
+    <select id="selectCount" resultType="long">
+        <include refid="count_Tail"/>
+        <include refid="where_fragement"/>
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectOne" resultMap="productMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectById" resultMap="productMapper" >
+        <include refid="selectAllColumns"/>
+        WHERE record.id = #{id}
+    </select>
+
+    <!-- 新增新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.xxx.model.base.entity.Product">
+        INSERT INTO product(
+            name,
+            custodian,
+            type,
+            scale,
+            rate,
+            start,
+            end,
+            partnership,
+            point,
+            details,
+            disclosure,
+            halt,
+            createtime
+        ) values (
+            #{name},
+            #{custodian},
+            #{type},
+            #{scale},
+            #{rate},
+            #{start},
+            #{end},
+            #{partnership},
+            #{point},
+            #{details},
+            #{disclosure},
+            #{halt},
+            #{createtime}
+        )
+    </insert>
+
+    <!-- 修改(通过ID只对不为空的内容进行修改) -->
+    <update id="updateNotNull" parameterType="com.xxx.model.base.entity.Product">
+        UPDATE product record
+        <include refid="update_fragement"/>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改(通过ID更新所有属性值) -->
+    <update id="updateParams" parameterType="com.xxx.model.base.entity.Product">
+        UPDATE product record
+        <set>
+            record.name = #{name},
+            record.custodian = #{custodian},
+            record.type = #{type},
+            record.scale = #{scale},
+            record.rate = #{rate},
+            record.start = #{start},
+            record.end = #{end},
+            record.partnership = #{partnership},
+            record.point = #{point},
+            record.details = #{details},
+            record.disclosure = #{disclosure},
+            record.halt = #{halt},
+            record.createtime = #{createtime}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过ID删除信息 -->
+    <delete id="deleteById">
+        DELETE FROM product
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 通过IDS批量删除 -->
+    <delete id="deleteByIds">
+        DELETE FROM product
+        WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- /////////////////// PUBLIC SQL STR ////////////////// -->
+
+    <!-- 查询数量公共sql -->
+    <sql id="count_Tail">
+        SELECT count(1) FROM product record
+    </sql>
+
+    <!-- 分页公共sql -->
+    <sql id="pagination_tail">
+        <if test="pager.orderBy != null and pager.orderBy != ''">
+            ORDER  BY  ${pager.orderBy}
+        </if>
+        limit #{pager.index} , #{pager.pageSize}
+    </sql>
+
+    <!-- 查询字段公共sql -->
+    <sql id="selectAllColumns">
+        <![CDATA[
+			SELECT
+				id,
+				name,
+				custodian,
+				type,
+				scale,
+				rate,
+				start,
+				end,
+				partnership,
+				point,
+				details,
+				disclosure,
+				halt,
+				createtime
+			FROM product record
+		]]>
+    </sql>
+
+    <sql id="where_fragement">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND record.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.name != null and entity.name != ''">
+                <![CDATA[ AND record.name LIKE concat('%',#{entity.name},'%') ]]>
+            </if>
+            <if test = "entity.custodian != null and entity.custodian != ''">
+                <![CDATA[ AND record.custodian = #{entity.custodian} ]]>
+            </if>
+            <if test = "entity.type != null and entity.type != ''">
+                <![CDATA[ AND record.type = #{entity.type} ]]>
+            </if>
+            <if test = "entity.scale != null and entity.scale != ''">
+                <![CDATA[ AND record.scale = #{entity.scale} ]]>
+            </if>
+            <if test = "entity.rate != null and entity.rate != ''">
+                <![CDATA[ AND record.rate = #{entity.rate} ]]>
+            </if>
+            <if test = "entity.start != null">
+                <![CDATA[ AND record.start = #{entity.start} ]]>
+            </if>
+            <if test = "entity.end != null">
+                <![CDATA[ AND record.end = #{entity.end} ]]>
+            </if>
+            <if test = "entity.partnership != null and entity.partnership != ''">
+                <![CDATA[ AND record.partnership = #{entity.partnership} ]]>
+            </if>
+            <if test = "entity.point != null and entity.point != ''">
+                <![CDATA[ AND record.point = #{entity.point} ]]>
+            </if>
+            <if test = "entity.details != null and entity.details != ''">
+                <![CDATA[ AND record.details = #{entity.details} ]]>
+            </if>
+            <if test = "entity.disclosure != null and entity.disclosure != ''">
+                <![CDATA[ AND record.disclosure = #{entity.disclosure} ]]>
+            </if>
+            <if test = "entity.halt != null and entity.halt != ''">
+                <![CDATA[ AND record.halt = #{entity.halt} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND record.createtime = #{entity.createtime} ]]>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 公共修改sql-->
+    <sql id="update_fragement">
+        <set>
+            <if test = "name != null and name != ''">
+                record.name = #{name},
+            </if>
+            <if test = "custodian != null and custodian != ''">
+                record.custodian = #{custodian},
+            </if>
+            <if test = "type != null and type != ''">
+                record.type = #{type},
+            </if>
+            <if test = "scale != null and scale != ''">
+                record.scale = #{scale},
+            </if>
+            <if test = "rate != null and rate != ''">
+                record.rate = #{rate},
+            </if>
+            <if test = "start != null ">
+                record.start = #{start},
+            </if>
+            <if test = "end != null ">
+                record.end = #{end},
+            </if>
+            <if test = "partnership != null and partnership != ''">
+                record.partnership = #{partnership},
+            </if>
+            <if test = "point != null and point != ''">
+                record.point = #{point},
+            </if>
+            <if test = "details != null and details != ''">
+                record.details = #{details},
+            </if>
+            <if test = "disclosure != null and disclosure != ''">
+                record.disclosure = #{disclosure},
+            </if>
+            <if test = "halt != null and halt != ''">
+                record.halt = #{halt},
+            </if>
+            <if test = "createtime != null ">
+                record.createtime = #{createtime}
+            </if>
+        </set>
+    </sql>
+    <!-- /////////////////// PUBLIC SQL END ////////////////// -->
+</mapper>

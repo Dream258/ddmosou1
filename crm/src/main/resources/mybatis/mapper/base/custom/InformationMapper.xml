@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.InformationDAO">
+
+    <select id="findNum" resultType="Integer">
+        SELECT COUNT(id) FROM information WHERE `read` = 0
+        <if test="target != null and target != 0">
+            AND target = #{target}
+        </if>
+    </select>
+
+    <select id="findList" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM information a
+        <include refid="joins"/>
+        <include refid="where"/>
+        order by a.createtime desc
+    </select>
+
+    <sql id="selectColumns">
+        a.id AS "id",
+        u.name AS "userName",
+        a.remarks AS "remarks",
+        a.type AS "type",
+        a.read AS "read",
+        a.createtime AS "createtime"
+    </sql>
+    <sql id="joins">
+        JOIN sys_user u ON u.id = a.target
+    </sql>
+    <sql id="where">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND a.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.target != null">
+                <![CDATA[ AND a.target = #{entity.target} ]]>
+            </if>
+            <if test = "entity.remarks != null and entity.remarks != ''">
+                <![CDATA[ AND a.remarks = #{entity.remarks} ]]>
+            </if>
+            <if test = "entity.type != null and entity.type != ''">
+                <![CDATA[ AND a.type = #{entity.type} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND a.createtime = #{entity.createtime} ]]>
+            </if>
+        </if>
+    </sql>
+
+</mapper>

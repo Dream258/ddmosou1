@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.ReviewDAO">
+
+    <select id="findList" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM review a
+        <include refid="joins"/>
+        <include refid="where"/>
+        order by a.createtime desc
+    </select>
+
+    <select id="getReviewById" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM review a
+        <include refid="joins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <sql id="selectColumns">
+        a.id AS "id",
+        c.name AS "customerName",
+        d.name AS "departName",
+        p.name AS "productName",
+        a.number AS "number",
+        a.visit AS "visit",
+        a.result AS "result",
+        a.createtime AS "createtime"
+    </sql>
+    <sql id="joins">
+        JOIN customer c ON c.id = a.customer
+        JOIN sys_department d ON d.id = a.department
+        JOIN product p ON p.id = a.product
+    </sql>
+    <sql id="where">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND a.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.customer != null">
+                <![CDATA[ AND a.customer = #{entity.customer} ]]>
+            </if>
+            <if test = "entity.department != null">
+                <![CDATA[ AND a.department = #{entity.department} ]]>
+            </if>
+            <if test = "entity.product != null">
+                <![CDATA[ AND a.product = #{entity.product} ]]>
+            </if>
+            <if test = "entity.number != null">
+                <![CDATA[ AND a.number LIKE concat('%',#{entity.number},'%') ]]>
+            </if>
+            <if test = "entity.visit != null and entity.visit != ''">
+                <![CDATA[ AND a.visit = #{entity.visit} ]]>
+            </if>
+            <if test = "entity.result != null and entity.result != ''">
+                <![CDATA[ AND a.result = #{entity.result} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND a.createtime = #{entity.createtime} ]]>
+            </if>
+        </if>
+    </sql>
+
+</mapper>

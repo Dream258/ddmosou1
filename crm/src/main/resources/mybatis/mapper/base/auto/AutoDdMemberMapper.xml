@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.AutoDdMemberDAO">
+    <!-- 返回值映射map -->
+    <resultMap id="ddMemberMapper" type="com.xxx.model.base.entity.DdMember">
+        <result property="id" column="id" />
+        <result property="userTelephone" column="user_telephone" />
+        <result property="userPassword" column="user_password" />
+        <result property="userPhoto" column="user_photo" />
+        <result property="userType" column="user_type" />
+        <result property="userCode" column="user_code" />
+        <result property="userHigherId" column="user_higher_id" />
+        <result property="userCreatetime" column="user_createtime" />
+        <result property="userGold" column="user_gold" />
+    </resultMap>
+
+    <!-- 分页查询数据集合 -->
+    <select id="selectListByPage" resultMap="ddMemberMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+        <if test="pager!=null">
+            <include refid="pagination_tail" />
+        </if>
+    </select>
+
+    <!-- 查询总数量 -->
+    <select id="selectCount" resultType="long">
+        <include refid="count_Tail"/>
+        <include refid="where_fragement"/>
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectOne" resultMap="ddMemberMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectById" resultMap="ddMemberMapper" >
+        <include refid="selectAllColumns"/>
+        WHERE record.id = #{id}
+    </select>
+
+    <!-- 新增新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.xxx.model.base.entity.DdMember">
+        INSERT INTO dd_member(
+            user_telephone,
+            user_password,
+            user_photo,
+            user_type,
+            user_code,
+            user_higher_id,
+            user_createtime,
+            user_gold
+        ) values (
+            #{userTelephone},
+            #{userPassword},
+            #{userPhoto},
+            #{userType},
+            #{userCode},
+            #{userHigherId},
+            #{userCreatetime},
+            #{userGold}
+        )
+    </insert>
+
+    <!-- 修改(通过ID只对不为空的内容进行修改) -->
+    <update id="updateNotNull" parameterType="com.xxx.model.base.entity.DdMember">
+        UPDATE dd_member record
+        <include refid="update_fragement"/>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改(通过ID更新所有属性值) -->
+    <update id="updateParams" parameterType="com.xxx.model.base.entity.DdMember">
+        UPDATE dd_member record
+        <set>
+            record.user_telephone = #{userTelephone},
+            record.user_password = #{userPassword},
+            record.user_photo = #{userPhoto},
+            record.user_type = #{userType},
+            record.user_code = #{userCode},
+            record.user_higher_id = #{userHigherId},
+            record.user_createtime = #{userCreatetime},
+            record.user_gold = #{userGold}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过ID删除信息 -->
+    <delete id="deleteById">
+        DELETE FROM dd_member
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 通过IDS批量删除 -->
+    <delete id="deleteByIds">
+        DELETE FROM dd_member
+        WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- /////////////////// PUBLIC SQL STR ////////////////// -->
+
+    <!-- 查询数量公共sql -->
+    <sql id="count_Tail">
+        SELECT count(1) FROM dd_member record
+    </sql>
+
+    <!-- 分页公共sql -->
+    <sql id="pagination_tail">
+        <if test="pager.orderBy != null and pager.orderBy != ''">
+            ORDER  BY  ${pager.orderBy}
+        </if>
+        limit #{pager.index} , #{pager.pageSize}
+    </sql>
+
+    <!-- 查询字段公共sql -->
+    <sql id="selectAllColumns">
+        <![CDATA[
+			SELECT
+				id,
+				user_telephone,
+				user_password,
+				user_photo,
+				user_type,
+				user_code,
+				user_higher_id,
+				user_createtime,
+				user_gold
+			FROM dd_member record
+		]]>
+    </sql>
+
+    <sql id="where_fragement">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND record.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.userTelephone != null and entity.userTelephone != ''">
+                <![CDATA[ AND record.user_telephone = #{entity.userTelephone} ]]>
+            </if>
+            <if test = "entity.userPassword != null and entity.userPassword != ''">
+                <![CDATA[ AND record.user_password = #{entity.userPassword} ]]>
+            </if>
+            <if test = "entity.userPhoto != null and entity.userPhoto != ''">
+                <![CDATA[ AND record.user_photo = #{entity.userPhoto} ]]>
+            </if>
+            <if test = "entity.userType != null">
+                <![CDATA[ AND record.user_type = #{entity.userType} ]]>
+            </if>
+            <if test = "entity.userCode != null and entity.userCode != ''">
+                <![CDATA[ AND record.user_code = #{entity.userCode} ]]>
+            </if>
+            <if test = "entity.userHigherId != null">
+                <![CDATA[ AND record.user_higher_id = #{entity.userHigherId} ]]>
+            </if>
+            <if test = "entity.userCreatetime != null">
+                <![CDATA[ AND record.user_createtime = #{entity.userCreatetime} ]]>
+            </if>
+            <if test = "entity.userGold != null">
+                <![CDATA[ AND record.user_gold = #{entity.userGold} ]]>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 公共修改sql-->
+    <sql id="update_fragement">
+        <set>
+            <if test = "userTelephone != null and userTelephone != ''">
+                record.user_telephone = #{userTelephone},
+            </if>
+            <if test = "userPassword != null and userPassword != ''">
+                record.user_password = #{userPassword},
+            </if>
+            <if test = "userPhoto != null and userPhoto != ''">
+                record.user_photo = #{userPhoto},
+            </if>
+            <if test = "userType != null ">
+                record.user_type = #{userType},
+            </if>
+            <if test = "userCode != null and userCode != ''">
+                record.user_code = #{userCode},
+            </if>
+            <if test = "userHigherId != null ">
+                record.user_higher_id = #{userHigherId},
+            </if>
+            <if test = "userCreatetime != null ">
+                record.user_createtime = #{userCreatetime},
+            </if>
+            <if test = "userGold != null ">
+                record.user_gold = #{userGold}
+            </if>
+        </set>
+    </sql>
+    <!-- /////////////////// PUBLIC SQL END ////////////////// -->
+</mapper>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.sys.dao.AutoSysLogsDAO">
+    <!-- 返回值映射map -->
+    <resultMap id="sysLogsMapper" type="com.xxx.model.sys.entity.SysLogs">
+        <result property="id" column="id" />
+        <result property="operId" column="oper_id" />
+        <result property="operator" column="operator" />
+        <result property="createtime" column="createtime" />
+        <result property="remarks" column="remarks" />
+        <result property="type" column="type" />
+    </resultMap>
+
+    <!-- 查询数据集合 -->
+    <select id="selectListAll" resultMap="sysLogsMapper" >
+        <include refid="selectAllColumns" />
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 分页查询数据集合 -->
+    <select id="selectListByPage" resultMap="sysLogsMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+        <if test="pager!=null">
+            <include refid="pagination_tail" />
+        </if>
+    </select>
+
+    <!-- 查询总数量 -->
+    <select id="selectCount" resultType="long">
+        <include refid="count_Tail"></include>
+        <include refid="where_fragement"></include>
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectOne" resultMap="sysLogsMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectById" resultMap="sysLogsMapper" >
+        <include refid="selectAllColumns"/>
+        WHERE record.id = #{id}
+    </select>
+
+    <!-- 新增新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.xxx.model.sys.entity.SysLogs">
+        INSERT INTO sys_logs(
+            oper_id,
+            operator,
+            createtime,
+            remarks,
+            type
+        ) values (
+            #{operId},
+            #{operator},
+            #{createtime},
+            #{remarks},
+            #{type}
+        )
+    </insert>
+
+    <!-- 修改(通过ID只对不为空的内容进行修改) -->
+    <update id="updateNotNull" parameterType="com.xxx.model.sys.entity.SysLogs">
+        UPDATE sys_logs record
+        <include refid="update_fragement"/>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改(通过ID更新所有属性值) -->
+    <update id="updateParams" parameterType="com.xxx.model.sys.entity.SysLogs">
+        UPDATE sys_logs record
+        <set>
+            record.oper_id = #{operId},
+            record.operator = #{operator},
+            record.createtime = #{createtime},
+            record.remarks = #{remarks},
+            record.type = #{type}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过ID删除信息 -->
+    <delete id="deleteById">
+        DELETE FROM sys_logs
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 通过IDS批量删除 -->
+    <delete id="deleteByIds">
+        DELETE FROM sys_logs
+        WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- /////////////////// PUBLIC SQL STR ////////////////// -->
+
+    <!-- 查询数量公共sql -->
+    <sql id="count_Tail">
+        SELECT count(1) FROM sys_logs record
+    </sql>
+
+    <!-- 分页公共sql -->
+    <sql id="pagination_tail">
+        <if test="pager.orderBy != null and pager.orderBy != ''">
+            ORDER  BY  ${pager.orderBy}
+        </if>
+        limit #{pager.index} , #{pager.pageSize}
+    </sql>
+
+    <!-- 查询字段公共sql -->
+    <sql id="selectAllColumns">
+        <![CDATA[
+			SELECT
+				id,
+				oper_id,
+				operator,
+				createtime,
+				remarks,
+				type
+			FROM sys_logs record
+		]]>
+</sql>
+
+    <sql id="where_fragement">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND record.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.operId != null">
+                <![CDATA[ AND record.oper_id = #{entity.operId} ]]>
+            </if>
+            <if test = "entity.operator != null and entity.operator != ''">
+                <![CDATA[ AND record.operator = #{entity.operator} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND record.createtime > #{entity.createtime} ]]>
+            </if>
+            <if test = "entity.remarks != null and entity.remarks != ''">
+                <![CDATA[ AND record.remarks = #{entity.remarks} ]]>
+            </if>
+            <if test = "entity.type != null and entity.type != ''">
+                <![CDATA[ AND record.type = #{entity.type} ]]>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 公共修改sql-->
+    <sql id="update_fragement">
+        <set>
+            <if test = "operId != null ">
+                record.oper_id = #{operId},
+            </if>
+            <if test = "operator != null and operator != ''">
+                record.operator = #{operator},
+            </if>
+            <if test = "createtime != null ">
+                record.createtime = #{createtime},
+            </if>
+            <if test = "remarks != null and remarks != ''">
+                record.remarks = #{remarks},
+            </if>
+            <if test = "type != null and type != ''">
+                record.type = #{type}
+            </if>
+        </set>
+    </sql>
+    <!-- /////////////////// PUBLIC SQL END ////////////////// -->
+</mapper>

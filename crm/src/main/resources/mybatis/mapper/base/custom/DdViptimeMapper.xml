@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.DdViptimeDAO">
+
+    <!-- 查询天数 -->
+    <select id="selectDays" resultType="Integer" >
+ 		SELECT DATEDIFF((select end_time from dd_viptime where user_telephone = #{telephone} and vip_type="排名监控"),NOW())
+ 	</select>
+</mapper>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.AutoDdKeyDAO">
+    <!-- 返回值映射map -->
+    <resultMap id="ddKeyMapper" type="com.xxx.model.base.entity.DdKey">
+        <result property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="goodsKey" column="goods_key" />
+        <result property="goodsId" column="goods_id" />
+        <result property="goodsName" column="goods_name" />
+        <result property="goodsSold" column="goods_sold" />
+        <result property="goodsThumbnail" column="goods_thumbnail" />
+        <result property="groupPrice" column="group_price" />
+        <result property="normalPrice" column="normal_price" />
+        <result property="goodsTop" column="goods_top" />
+        <result property="goodsTime" column="goods_time" />
+        <result property="type" column="type" />
+    </resultMap>
+
+    <!-- 分页查询数据集合 -->
+    <select id="selectListByPage" resultMap="ddKeyMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+        <if test="pager!=null">
+            <include refid="pagination_tail" />
+        </if>
+    </select>
+
+    <!-- 查询总数量 -->
+    <select id="selectCount" resultType="long">
+        <include refid="count_Tail"/>
+        <include refid="where_fragement"/>
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectOne" resultMap="ddKeyMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectById" resultMap="ddKeyMapper" >
+        <include refid="selectAllColumns"/>
+        WHERE record.id = #{id}
+    </select>
+
+    <!-- 新增新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.xxx.model.base.entity.DdKey">
+        INSERT INTO dd_key(
+            user_id,
+            goods_key,
+            goods_id,
+            goods_name,
+            goods_sold,
+            goods_thumbnail,
+            group_price,
+            normal_price,
+            goods_top,
+            goods_time,
+            type
+        ) values (
+            #{userId},
+            #{goodsKey},
+            #{goodsId},
+            #{goodsName},
+            #{goodsSold},
+            #{goodsThumbnail},
+            #{groupPrice},
+            #{normalPrice},
+            #{goodsTop},
+            #{goodsTime},
+            #{type}
+        )
+    </insert>
+
+    <!-- 修改(通过ID只对不为空的内容进行修改) -->
+    <update id="updateNotNull" parameterType="com.xxx.model.base.entity.DdKey">
+        UPDATE dd_key record
+        <include refid="update_fragement"/>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改(通过ID更新所有属性值) -->
+    <update id="updateParams" parameterType="com.xxx.model.base.entity.DdKey">
+        UPDATE dd_key record
+        <set>
+            record.user_id = #{userId},
+            record.goods_key = #{goodsKey},
+            record.goods_id = #{goodsId},
+            record.goods_name = #{goodsName},
+            record.goods_sold = #{goodsSold},
+            record.goods_thumbnail = #{goodsThumbnail},
+            record.group_price = #{groupPrice},
+            record.normal_price = #{normalPrice},
+            record.goods_top = #{goodsTop},
+            record.goods_time = #{goodsTime},
+            record.type = #{type}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过ID删除信息 -->
+    <delete id="deleteById">
+        DELETE FROM dd_key
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 通过IDS批量删除 -->
+    <delete id="deleteByIds">
+        DELETE FROM dd_key
+        WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- /////////////////// PUBLIC SQL STR ////////////////// -->
+
+    <!-- 查询数量公共sql -->
+    <sql id="count_Tail">
+        SELECT count(1) FROM dd_key record
+    </sql>
+
+    <!-- 分页公共sql -->
+    <sql id="pagination_tail">
+        <if test="pager.orderBy != null and pager.orderBy != ''">
+            ORDER  BY  ${pager.orderBy}
+        </if>
+        limit #{pager.index} , #{pager.pageSize}
+    </sql>
+
+    <!-- 查询字段公共sql -->
+    <sql id="selectAllColumns">
+        <![CDATA[
+			SELECT
+				id,
+				user_id,
+				goods_key,
+				goods_id,
+				goods_name,
+				goods_sold,
+				goods_thumbnail,
+				group_price,
+				normal_price,
+				goods_top,
+				goods_time,
+				type
+			FROM dd_key record
+		]]>
+    </sql>
+
+    <sql id="where_fragement">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND record.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.userId != null">
+                <![CDATA[ AND record.user_id = #{entity.userId} ]]>
+            </if>
+            <if test = "entity.goodsKey != null and entity.goodsKey != ''">
+                <![CDATA[ AND record.goods_key = #{entity.goodsKey} ]]>
+            </if>
+            <if test = "entity.goodsId != null and entity.goodsId != ''">
+                <![CDATA[ AND record.goods_id = #{entity.goodsId} ]]>
+            </if>
+            <if test = "entity.goodsName != null and entity.goodsName != ''">
+                <![CDATA[ AND record.goods_name = #{entity.goodsName} ]]>
+            </if>
+            <if test = "entity.goodsSold != null and entity.goodsSold != ''">
+                <![CDATA[ AND record.goods_sold = #{entity.goodsSold} ]]>
+            </if>
+            <if test = "entity.goodsThumbnail != null and entity.goodsThumbnail != ''">
+                <![CDATA[ AND record.goods_thumbnail = #{entity.goodsThumbnail} ]]>
+            </if>
+            <if test = "entity.groupPrice != null and entity.groupPrice != ''">
+                <![CDATA[ AND record.group_price = #{entity.groupPrice} ]]>
+            </if>
+            <if test = "entity.normalPrice != null and entity.normalPrice != ''">
+                <![CDATA[ AND record.normal_price = #{entity.normalPrice} ]]>
+            </if>
+            <if test = "entity.goodsTop != null and entity.goodsTop != ''">
+                <![CDATA[ AND record.goods_top = #{entity.goodsTop} ]]>
+            </if>
+            <if test = "entity.goodsTime != null">
+                <![CDATA[ AND record.goods_time = #{entity.goodsTime} ]]>
+            </if>
+            <if test = "entity.type != null and entity.type != ''">
+                <![CDATA[ AND record.type = #{entity.type} ]]>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 公共修改sql-->
+    <sql id="update_fragement">
+        <set>
+            <if test = "userId != null ">
+                record.user_id = #{userId},
+            </if>
+            <if test = "goodsKey != null and goodsKey != ''">
+                record.goods_key = #{goodsKey},
+            </if>
+            <if test = "goodsId != null and goodsId != ''">
+                record.goods_id = #{goodsId},
+            </if>
+            <if test = "goodsName != null and goodsName != ''">
+                record.goods_name = #{goodsName},
+            </if>
+            <if test = "goodsSold != null and goodsSold != ''">
+                record.goods_sold = #{goodsSold},
+            </if>
+            <if test = "goodsThumbnail != null and goodsThumbnail != ''">
+                record.goods_thumbnail = #{goodsThumbnail},
+            </if>
+            <if test = "groupPrice != null and groupPrice != ''">
+                record.group_price = #{groupPrice},
+            </if>
+            <if test = "normalPrice != null and normalPrice != ''">
+                record.normal_price = #{normalPrice},
+            </if>
+            <if test = "goodsTop != null and goodsTop != ''">
+                record.goods_top = #{goodsTop},
+            </if>
+            <if test = "goodsTime != null ">
+                record.goods_time = #{goodsTime},
+            </if>
+            <if test = "type != null and type != ''">
+                record.type = #{type}
+            </if>
+        </set>
+    </sql>
+    <!-- /////////////////// PUBLIC SQL END ////////////////// -->
+</mapper>

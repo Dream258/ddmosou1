@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.CareDAO">
+
+    <select id="findList" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM care a
+        <include refid="joins"/>
+        <include refid="where"/>
+        order by a.createtime desc
+    </select>
+
+    <select id="getCareById" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM care a
+        <include refid="joins"/>
+        WHERE a.id = #{id}
+    </select>
+
+    <sql id="selectColumns">
+        a.id AS "id",
+        d.name AS "departName",
+        c.name AS "customerName",
+        a.care AS "care",
+        a.phone AS "phone",
+        a.content AS "content",
+        a.createtime AS "createtime"
+    </sql>
+    <sql id="joins">
+        JOIN sys_department d ON d.id = a.department
+        JOIN customer c ON c.id = a.customer
+    </sql>
+    <sql id="where">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND a.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.customer != null">
+                <![CDATA[ AND a.customer = #{entity.customer} ]]>
+            </if>
+            <if test = "entity.care != null and entity.care != ''">
+                <![CDATA[ AND a.care = #{entity.care} ]]>
+            </if>
+            <if test = "entity.phone != null and entity.phone != ''">
+                <![CDATA[ AND a.phone = #{entity.phone} ]]>
+            </if>
+            <if test = "entity.content != null and entity.content != ''">
+                <![CDATA[ AND a.content = #{entity.content} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND a.createtime = #{entity.createtime} ]]>
+            </if>
+        </if>
+    </sql>
+
+</mapper>

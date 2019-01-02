@@ -1,0 +1,213 @@
+.ranking-wrapper,
+.ranking-wrapper .form-forget,
+.ranking-wrapper .jd-form-wrapper .register-form .next-input {
+	display: none
+}
+
+.ranking-wrapper .jd-form-wrapper {
+	max-width: 420px;
+	height: 462px;
+	background: #FFF;
+	-webkit-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .1);
+	box-shadow: 0 1px 20px 0 rgba(0, 0, 0, .1);
+	text-align: center;
+	margin: 0 auto;
+	overflow: hidden
+}
+
+.ranking-wrapper .jd-form-wrapper .login-form-title {
+	padding-top: 40px;
+	position: relative;
+	height: 90px
+}
+
+.ranking-wrapper .jd-form-wrapper .login-form-title::after {
+	content: "|";
+	position: absolute;
+	top: 48px;
+	left: 49%;
+	color: #999;
+	font-size: 16px
+}
+
+.ranking-wrapper .jd-form-wrapper .login-form-title div {
+	font-size: 22px;
+	cursor: pointer;
+	text-align: left;
+	line-height: 40px
+}
+
+.ranking-wrapper .jd-form-wrapper .login-form-title div span {
+	margin: 20px;
+	color: #999
+}
+
+.ranking-wrapper .jd-form-wrapper .login-form-title div .active {
+	color: #556CED
+}
+
+.ranking-wrapper .jd-form-wrapper .login-input-wrapper {
+	width: 100%;
+	padding: 25px 30px 0
+}
+
+.ranking-wrapper .jd-form-wrapper .forget-submit,
+.ranking-wrapper .jd-form-wrapper .login-submit {
+	width: 100%;
+	background: #556CED;
+	color: #fff
+}
+
+.ranking-wrapper .jd-form-wrapper .forget-btn {
+	float: right;
+	color: #556CED;
+	margin-top: 10px
+}
+
+.ranking-wrapper .jd-form-wrapper .forget-submit:hover,
+.ranking-wrapper .jd-form-wrapper .login-submit:hover {
+	-webkit-box-shadow: 0 0 30px 0 rgba(30, 136, 245, .9);
+	box-shadow: 0 0 30px 0 rgba(30, 136, 245, .9)
+}
+
+.ranking-wrapper .jd-form-wrapper .register-form {
+	-webkit-transform: translate3d(100%, 0, 0);
+	transform: translate3d(100%, 0, 0)
+}
+
+.ranking-wrapper .jd-form-wrapper .register-form .before-btn {
+	line-height: 40px
+}
+
+.ranking-wrapper .jd-form-wrapper .register-next,
+.ranking-wrapper .jd-form-wrapper .register-submit {
+	width: 100%;
+	background: #556CED;
+	color: #fff
+}
+
+.ranking-wrapper .jd-form-wrapper .register-next:hover,
+.ranking-wrapper .jd-form-wrapper .register-submit:hover {
+	-webkit-box-shadow: 0 0 30px 0 rgba(30, 136, 245, .9);
+	box-shadow: 0 0 30px 0 rgba(30, 136, 245, .9)
+}
+
+.ranking-wrapper button,
+.ranking-wrapper input {
+	border-radius: 0
+}
+
+.ranking-wrapper .form-forget .forget-back {
+	font-size: 24px;
+	position: absolute;
+	top: 17px;
+	left: 30px;
+	color: #666;
+	cursor: pointer
+}
+
+.ranking-wrapper .form-forget .forget-back .iconfont {
+	font-size: 24px
+}
+
+.login-input-wrapper {
+	position: relative
+}
+
+.login-input-wrapper .error-info {
+	width: 80%;
+	position: absolute;
+	text-align: left;
+	font-size: 12px;
+	top: 62px;
+	left: 10%;
+	color: red
+}
+
+.login-input-wrapper .success-info {
+	position: absolute;
+	top: 30px;
+	right: 12%;
+	font-size: 21px;
+	color: #4ec27f
+}
+
+.ranking-wrapper .loginBox {
+	margin: 100px 0;
+	padding: 10px
+}
+
+.jd-form-wrapper {
+	position: relative
+}
+
+.jd-form-wrapper .login-close {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	font-size: 24px;
+	cursor: pointer;
+	z-index: 100;
+	color: #ddd
+}
+
+.jd_form_loading,
+.login-wrapper.ranking-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: rgba(255, 255, 255, .8)
+}
+
+.jd-form-wrapper .login-close:hover {
+	color: #999
+}
+
+.login-wrapper.ranking-wrapper {
+	bottom: 0;
+	right: 0;
+	margin: auto;
+	z-index: 99999
+}
+
+.jd_form_loading {
+	display: none;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	color: #556CED;
+	padding-top: 45%
+}
+
+@media screen and (max-width:768px) {
+	.ranking-wrapper .loginBox {
+		margin: 10px 0;
+		padding: 10px
+	}
+}
+
+@media screen and (max-width:414px) {
+	.ranking-wrapper .jd-form-wrapper {
+		width: 380px
+	}
+	.ranking-wrapper .jd-form-wrapper .login-input-wrapper {
+		padding: 25px 20px 0
+	}
+	.ranking-wrapper .form-forget .forget-back {
+		top: 0;
+		left: 20px
+	}
+}
+
+@media screen and (max-width:375px) {
+	.ranking-wrapper .jd-form-wrapper {
+		width: 100%
+	}
+	.ranking-wrapper .jd-form-wrapper .login-input-wrapper {
+		padding: 25px 20px 0
+	}
+	.ranking-wrapper .form-forget .forget-back {
+		top: 0;
+		left: 20px
+	}
+}

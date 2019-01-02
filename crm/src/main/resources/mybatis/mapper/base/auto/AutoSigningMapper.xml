@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.AutoSigningDAO">
+    <!-- 返回值映射map -->
+    <resultMap id="signingMapper" type="com.xxx.model.base.entity.Signing">
+        <result property="id" column="id" />
+        <result property="customer" column="customer" />
+        <result property="department" column="department" />
+        <result property="product" column="product" />
+        <result property="number" column="number" />
+        <result property="time" column="time" />
+        <result property="sum" column="sum" />
+        <result property="cash" column="cash" />
+        <result property="visit" column="visit" />
+        <result property="contract" column="contract" />
+        <result property="start" column="start" />
+        <result property="end" column="end" />
+        <result property="closed" column="closed" />
+        <result property="profit" column="profit" />
+        <result property="agent" column="agent" />
+        <result property="state" column="state" />
+        <result property="createtime" column="createtime" />
+    </resultMap>
+
+    <!-- 分页查询数据集合 -->
+    <select id="selectListByPage" resultMap="signingMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+        <if test="pager!=null">
+            <include refid="pagination_tail" />
+        </if>
+    </select>
+
+    <!-- 查询总数量 -->
+    <select id="selectCount" resultType="long">
+        <include refid="count_Tail"/>
+        <include refid="where_fragement"/>
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectOne" resultMap="signingMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectById" resultMap="signingMapper" >
+        <include refid="selectAllColumns"/>
+        WHERE record.id = #{id}
+    </select>
+
+    <!-- 新增新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.xxx.model.base.entity.Signing">
+        INSERT INTO signing(
+            customer,
+            department,
+            product,
+            number,
+            time,
+            sum,
+            cash,
+            visit,
+            contract,
+            start,
+            end,
+            closed,
+            profit,
+            agent,
+            state,
+            createtime
+        ) values (
+            #{customer},
+            #{department},
+            #{product},
+            #{number},
+            #{time},
+            #{sum},
+            #{cash},
+            #{visit},
+            #{contract},
+            #{start},
+            #{end},
+            #{closed},
+            #{profit},
+            #{agent},
+            #{state},
+            #{createtime}
+        )
+    </insert>
+
+    <!-- 修改(通过ID只对不为空的内容进行修改) -->
+    <update id="updateNotNull" parameterType="com.xxx.model.base.entity.Signing">
+        UPDATE signing record
+        <include refid="update_fragement"/>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改(通过ID更新所有属性值) -->
+    <update id="updateParams" parameterType="com.xxx.model.base.entity.Signing">
+        UPDATE signing record
+        <set>
+            record.customer = #{customer},
+            record.department = #{department},
+            record.product = #{product},
+            record.number = #{number},
+            record.time = #{time},
+            record.sum = #{sum},
+            record.cash = #{cash},
+            record.visit = #{visit},
+            record.contract = #{contract},
+            record.start = #{start},
+            record.end = #{end},
+            record.closed = #{closed},
+            record.profit = #{profit},
+            record.agent = #{agent},
+            record.state = #{state},
+            record.createtime = #{createtime}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过ID删除信息 -->
+    <delete id="deleteById">
+        DELETE FROM signing
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 通过IDS批量删除 -->
+    <delete id="deleteByIds">
+        DELETE FROM signing
+        WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- /////////////////// PUBLIC SQL STR ////////////////// -->
+
+    <!-- 查询数量公共sql -->
+    <sql id="count_Tail">
+        SELECT count(1) FROM signing record
+    </sql>
+
+    <!-- 分页公共sql -->
+    <sql id="pagination_tail">
+        <if test="pager.orderBy != null and pager.orderBy != ''">
+            ORDER  BY  ${pager.orderBy}
+        </if>
+        limit #{pager.index} , #{pager.pageSize}
+    </sql>
+
+    <!-- 查询字段公共sql -->
+    <sql id="selectAllColumns">
+        <![CDATA[
+			SELECT
+				id,
+				customer,
+				department,
+				product,
+				number,
+				time,
+				sum,
+				cash,
+				visit,
+				contract,
+				start,
+				end,
+				closed,
+				profit,
+				agent,
+				state,
+				createtime
+			FROM signing record
+		]]>
+    </sql>
+
+    <sql id="where_fragement">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND record.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.customer != null">
+                <![CDATA[ AND record.customer = #{entity.customer} ]]>
+            </if>
+            <if test = "entity.department != null">
+                <![CDATA[ AND record.department = #{entity.department} ]]>
+            </if>
+            <if test = "entity.product != null">
+                <![CDATA[ AND record.product = #{entity.product} ]]>
+            </if>
+            <if test = "entity.number != null">
+                <![CDATA[ AND record.number = #{entity.number} ]]>
+            </if>
+            <if test = "entity.time != null">
+                <![CDATA[ AND record.time = #{entity.time} ]]>
+            </if>
+            <if test = "entity.sum != null">
+                <![CDATA[ AND record.sum = #{entity.sum} ]]>
+            </if>
+            <if test = "entity.cash != null and entity.cash != ''">
+                <![CDATA[ AND record.cash = #{entity.cash} ]]>
+            </if>
+            <if test = "entity.visit != null and entity.visit != ''">
+                <![CDATA[ AND record.visit = #{entity.visit} ]]>
+            </if>
+            <if test = "entity.contract != null and entity.contract != ''">
+                <![CDATA[ AND record.contract = #{entity.contract} ]]>
+            </if>
+            <if test = "entity.start != null">
+                <![CDATA[ AND record.start = #{entity.start} ]]>
+            </if>
+            <if test = "entity.end != null">
+                <![CDATA[ AND record.end = #{entity.end} ]]>
+            </if>
+            <if test = "entity.closed != null and entity.closed != ''">
+                <![CDATA[ AND record.closed = #{entity.closed} ]]>
+            </if>
+            <if test = "entity.profit != null">
+                <![CDATA[ AND record.profit = #{entity.profit} ]]>
+            </if>
+            <if test = "entity.agent != null">
+                <![CDATA[ AND record.agent = #{entity.agent} ]]>
+            </if>
+            <if test = "entity.state != null and entity.state != ''">
+                <![CDATA[ AND record.state = #{entity.state} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND record.createtime = #{entity.createtime} ]]>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 公共修改sql-->
+    <sql id="update_fragement">
+        <set>
+            <if test = "customer != null ">
+                record.customer = #{customer},
+            </if>
+            <if test = "department != null ">
+                record.department = #{department},
+            </if>
+            <if test = "product != null ">
+                record.product = #{product},
+            </if>
+            <if test = "number != null ">
+                record.number = #{number},
+            </if>
+            <if test = "time != null ">
+                record.time = #{time},
+            </if>
+            <if test = "sum != null ">
+                record.sum = #{sum},
+            </if>
+            <if test = "cash != null and cash != ''">
+                record.cash = #{cash},
+            </if>
+            <if test = "visit != null and visit != ''">
+                record.visit = #{visit},
+            </if>
+            <if test = "contract != null and contract != ''">
+                record.contract = #{contract},
+            </if>
+            <if test = "start != null ">
+                record.start = #{start},
+            </if>
+            <if test = "end != null ">
+                record.end = #{end},
+            </if>
+            <if test = "closed != null and closed != ''">
+                record.closed = #{closed},
+            </if>
+            <if test = "profit != null ">
+                record.profit = #{profit},
+            </if>
+            <if test = "agent != null ">
+                record.agent = #{agent},
+            </if>
+            <if test = "state != null and state != ''">
+                record.state = #{state},
+            </if>
+            <if test = "createtime != null ">
+                record.createtime = #{createtime}
+            </if>
+        </set>
+    </sql>
+    <!-- /////////////////// PUBLIC SQL END ////////////////// -->
+</mapper>

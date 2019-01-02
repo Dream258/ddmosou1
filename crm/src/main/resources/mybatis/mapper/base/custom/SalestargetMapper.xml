@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.SalestargetDAO">
+
+    <select id="findList" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM salestarget a
+        <include refid="joins"/>
+        WHERE 1=1
+        <if test="department != null and department != 0">
+            <![CDATA[ AND l.department = #{department}]]>
+        </if>
+        order by a.createtime desc
+    </select>
+
+    <sql id="selectColumns">
+        a.id AS "id",
+        a.product AS "product",
+        p.name AS "productName",
+        FORMAT(a.sum,2) AS "sum",
+        LEFT(a.start,10) AS "start",
+        LEFT(a.end,10) AS "end",
+        a.rate AS "rate"
+        <if test="department != null and department != 0">
+            ,FORMAT(l.sum,2) AS "allot"
+        </if>
+    </sql>
+    <sql id="joins">
+        JOIN product p ON p.id = a.product
+        <if test="department != null and department != 0">
+            JOIN salesallot l ON l.target = a.id
+        </if>
+    </sql>
+
+</mapper>

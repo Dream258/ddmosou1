@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+     <comment>代码生成器配置文件:</comment>
+
+     <!-- ########################## MySQL类型转换 BEGIN ########################## -->
+
+     <entry key="tableRemovePrefixes"/>
+     <entry key="CHAR">String</entry>
+     <entry key="VARCHAR">String</entry>
+     <entry key="TEXT">String</entry>
+     <entry key="MEDIUMTEXT">String</entry>
+     <entry key="INT">Integer</entry>
+     <entry key="INTEGER">Integer</entry>
+     <entry key="TINYINT">Integer</entry>
+     <entry key="SMALLINT">Integer</entry>
+     <entry key="MEDIUMINT">Integer</entry>
+     <entry key="BIGINT">Long</entry>
+     <entry key="NUMERIC">Double</entry>
+     <entry key="DOUBLE">Double</entry>
+     <entry key="DECIMAL">java.math.BigDecimal</entry>
+     <entry key="REAL">Double</entry>
+     <entry key="DATE">java.util.Date</entry>
+     <entry key="TIME">java.util.Date</entry>
+     <entry key="DATETIME">java.util.Date</entry>
+     <entry key="TIMESTAMP">java.util.Date</entry>
+     <entry key="BIT">Boolean</entry>
+
+     <!-- ##########################  MySQL类型转换 END  ########################## -->
+
+</properties>

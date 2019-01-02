@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.SalesplanDAO">
+
+    <select id="findList" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM salesplan a
+        <include refid="joins"/>
+        <include refid="where"/>
+        order by a.createtime desc
+    </select>
+
+    <sql id="selectColumns">
+        a.id AS "id",
+        d.name AS "departName",
+        FORMAT(a.sum,2) AS "sum",
+        LEFT(a.time,10) AS "time",
+        a.createtime AS "createtime"
+    </sql>
+    <sql id="joins">
+        JOIN sys_department d ON d.id = a.department
+    </sql>
+    <sql id="where">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND a.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.department != null">
+                <![CDATA[ AND a.department = #{entity.department} ]]>
+            </if>
+            <if test = "entity.sum != null">
+                <![CDATA[ AND a.sum = #{entity.sum} ]]>
+            </if>
+            <if test = "entity.time != null">
+                <![CDATA[ AND a.time = #{entity.time} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND a.createtime = #{entity.createtime} ]]>
+            </if>
+        </if>
+    </sql>
+
+</mapper>

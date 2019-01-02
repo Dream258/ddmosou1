@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.ProductDAO">
+
+    <select id="findList" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM product a
+        <include refid="where"/>
+        order by a.createtime desc
+    </select>
+
+    <select id="getProductById" resultType="java.util.Map">
+        SELECT
+        a.id AS "id",
+        a.name AS "name",
+        a.scale AS "scale",
+        a.rate AS "rate",
+        LEFT(a.start,10) AS "start",
+        LEFT(a.end,10) AS "end",
+        a.halt AS "halt",
+        a.image AS "image",
+        a.custodian AS "custodian",
+        a.type AS "type",
+        a.partnership AS "partnership",
+        FORMAT(a.point,2) AS "point",
+        a.details AS "details",
+        a.disclosure AS "disclosure"
+        FROM product a
+        WHERE a.id = #{id}
+    </select>
+
+    <sql id="selectColumns">
+        a.id AS "id",
+        a.name AS "name",
+        a.scale AS "scale",
+        a.rate AS "rate",
+        LEFT(a.start,10) AS "start",
+        LEFT(a.end,10) AS "end",
+        a.halt AS "halt"
+    </sql>
+    <sql id="where">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND a.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.name != null and entity.name != ''">
+                <![CDATA[ AND a.name LIKE concat('%',#{entity.name},'%') ]]>
+            </if>
+            <if test = "entity.custodian != null and entity.custodian != ''">
+                <![CDATA[ AND a.custodian = #{entity.custodian} ]]>
+            </if>
+            <if test = "entity.type != null and entity.type != ''">
+                <![CDATA[ AND a.type = #{entity.type} ]]>
+            </if>
+            <if test = "entity.scale != null and entity.scale != ''">
+                <![CDATA[ AND a.scale = #{entity.scale} ]]>
+            </if>
+            <if test = "entity.rate != null and entity.rate != ''">
+                <![CDATA[ AND a.rate = #{entity.rate} ]]>
+            </if>
+            <if test = "entity.start != null">
+                <![CDATA[ AND a.start = #{entity.start} ]]>
+            </if>
+            <if test = "entity.end != null">
+                <![CDATA[ AND a.end = #{entity.end} ]]>
+            </if>
+            <if test = "entity.partnership != null and entity.partnership != ''">
+                <![CDATA[ AND a.partnership = #{entity.partnership} ]]>
+            </if>
+            <if test = "entity.point != null and entity.point != ''">
+                <![CDATA[ AND a.point = #{entity.point} ]]>
+            </if>
+            <if test = "entity.details != null and entity.details != ''">
+                <![CDATA[ AND a.details = #{entity.details} ]]>
+            </if>
+            <if test = "entity.disclosure != null and entity.disclosure != ''">
+                <![CDATA[ AND a.disclosure = #{entity.disclosure} ]]>
+            </if>
+            <if test = "entity.halt != null and entity.halt != ''">
+                <![CDATA[ AND a.halt = #{entity.halt} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND a.createtime = #{entity.createtime} ]]>
+            </if>
+        </if>
+    </sql>
+</mapper>

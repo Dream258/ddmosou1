@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.SigningDAO">
+
+    <select id="sumByDepartment" resultType="String">
+        select FORMAT(IFNULL(SUM(sum),0),2) from signing where 1=1
+        and DATE_FORMAT(time,'%Y') = DATE_FORMAT(CURDATE(),'%Y')
+        <if test="department != null and department != 0">
+            and department = #{department}
+        </if>
+        <if test="agent != null and agent != 0">
+            and agent = #{agent}
+        </if>
+    </select>
+
+    <select id="sumMonthByDepartment" resultType="String">
+        select FORMAT(IFNULL(SUM(sum),0),2) from signing where 1=1
+        and DATE_FORMAT(end,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m')
+        <if test="department != null and department != 0">
+            and department = #{department}
+        </if>
+        <if test="agent != null and agent != 0">
+            and agent = #{agent}
+        </if>
+    </select>
+
+    <select id="sumGroup" resultType="java.util.Map">
+        SELECT d.name,(SELECT FORMAT(IFNULL(SUM(s.sum),0),2) FROM signing s WHERE 1=1 AND s.department = d.id
+        <![CDATA[ AND s.time >= #{start} AND s.time <= #{end} ]]> )AS num
+        FROM sys_department d WHERE d.level = 2
+        <if test="department != null and department != 0">
+            AND d.id = #{department}
+        </if>
+    </select>
+
+    <select id="sumGroupByYear" resultType="java.util.Map">
+        SELECT m.name AS MONTH,
+        (SELECT IFNULL(SUM(s.sum),0) FROM signing s WHERE 1=1 AND s.department = #{department}
+        <if test="agent != null and agent != 0">
+            and s.agent = #{agent}
+        </if>
+        AND YEAR(s.time) = #{year} AND MONTH(s.time) = m.name) AS num FROM months AS m WHERE 1=1
+    </select>
+
+    <select id="sumGroupByMonth" resultType="java.util.Map">
+        SELECT d.id,d.name,(SELECT FORMAT(IFNULL(SUM(s.sum),0),2) FROM signing s WHERE s.department = d.id
+        AND DATE_FORMAT(s.end,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m') )AS num
+        FROM sys_department d WHERE d.level = 2
+    </select>
+
+    <select id="sumGroupByMonth2" resultType="java.util.Map">
+        SELECT d.id,d.name,(SELECT IFNULL(SUM(s.sum),0) FROM signing s WHERE s.department = d.id
+        <if test="agent != null and agent != 0">
+            and s.agent = #{agent}
+        </if>
+        AND DATE_FORMAT(s.end,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m') )AS num
+        FROM sys_department d WHERE d.level = 2
+        <if test="department != null and department != 0">
+            AND d.id = #{department}
+        </if>
+    </select>
+
+    <select id="getSigningById" resultType="java.util.Map">
+        SELECT
+        a.id AS "id",
+        a.number AS "number",
+        u.name AS "agentName",
+        c.name AS "customerName",
+        LEFT(a.time,10) AS "time",
+        FORMAT(a.sum,2) AS "sum",
+        a.cash AS "cash",
+        a.type AS "type",
+        LEFT(a.start,10) AS "start",
+        LEFT(a.end,10) AS "end",
+        FORMAT(a.profit,2) AS "profit",
+        FORMAT(a.cash_sum,2) AS "cashSum",
+        a.cash_time as "cashTime",
+        a.visit as "visit",
+        a.closed as "closed",
+        a.contract as "contract",
+        a.img_a as "imgA",
+        a.img_b as "imgB",
+        a.img_c as "imgC",
+        a.img_d as "imgD",
+        a.img_e as "imgE"
+        FROM signing a
+        JOIN sys_user u ON u.id = a.agent JOIN customer c ON c.id = a.customer WHERE 1=1 AND a.id = #{id}
+    </select>
+
+    <select id="getSigningById2" resultType="java.util.Map">
+        SELECT
+        a.id AS "id",
+        a.number AS "number",
+        u.name AS "agentName",
+        c.name AS "customerName",
+        p.id AS "product",
+        p.name AS "productName",
+        LEFT(a.time,10) AS "time",
+        FORMAT(a.sum,2) AS "sum",
+        a.cash AS "cash",
+        a.type AS "type",
+        LEFT(a.start,10) AS "start",
+        LEFT(a.end,10) AS "end",
+        FORMAT(a.profit,2) AS "profit",
+        FORMAT(a.cash_sum,2) AS "cashSum",
+        a.cash_time as "cashTime",
+        a.visit as "visit",
+        a.closed as "closed",
+        a.contract as "contract",
+        a.img_a as "imgA",
+        a.img_b as "imgB",
+        a.img_c as "imgC",
+        a.img_d as "imgD",
+        a.img_e as "imgE"
+        FROM signing a
+        JOIN sys_user u ON u.id = a.agent JOIN customer c ON c.id = a.customer JOIN product p ON p.id = a.product
+        WHERE 1=1 AND a.id = #{id}
+    </select>
+
+    <select id="findList" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM signing a
+        <include refid="joins"/>
+        <include refid="where"/>
+        order by a.createtime desc
+    </select>
+
+    <select id="findExpiredList" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM signing a
+        <include refid="joins"/>
+        where 1=1
+        <if test = "department != null and department != 0">
+            <![CDATA[ AND a.department = #{department} ]]>
+        </if>
+        <if test = "customerName != null and customerName != ''">
+            <![CDATA[ AND a.customer in (select c.id from customer c where c.name like concat('%',#{customerName},'%')) ]]>
+        </if>
+        <if test = "type == '1'.toString()">
+            <![CDATA[ AND TO_DAYS(a.end) = TO_DAYS(NOW()) ]]>
+        </if>
+        <if test = "type == '2'.toString()">
+            <![CDATA[ AND YEARWEEK(DATE_FORMAT(a.end,'%Y-%m-%d')) = YEARWEEK(NOW()) ]]>
+        </if>
+        <if test = "type == '3'.toString()">
+            <![CDATA[ AND DATE_FORMAT(a.end,'%Y%m') = DATE_FORMAT(CURDATE(),'%Y%m') ]]>
+        </if>
+        <if test = "type == '4'.toString()">
+            <![CDATA[ AND a.end > NOW() ]]>
+        </if>
+        <if test = "type == '5'.toString()">
+            <![CDATA[ AND DATEDIFF(NOW(),a.end)>0 ]]>
+        </if>
+    </select>
+
+    <sql id="selectColumns">
+        a.id AS "id",
+        a.number AS "number",
+        d.name AS "departName",
+        u.name AS "agentName",
+        c.name AS "customerName",
+        LEFT(a.time,10) AS "time",
+        FORMAT(a.sum,2) AS "sum",
+        a.cash AS "cash",
+        a.state AS "state",
+        a.type AS "type",
+        LEFT(a.start,10) AS "start",
+        LEFT(a.end,10) AS "end"
+    </sql>
+    <sql id="joins">
+        JOIN sys_department d ON d.id = a.department
+        JOIN sys_user u ON u.id = a.agent
+        JOIN customer c ON c.id = a.customer
+    </sql>
+    <sql id="where">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND a.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.customer != null">
+                <![CDATA[ AND a.customer = #{entity.customer} ]]>
+            </if>
+            <if test = "entity.department != null">
+                <![CDATA[ AND a.department = #{entity.department} ]]>
+            </if>
+            <if test = "entity.product != null">
+                <![CDATA[ AND a.product = #{entity.product} ]]>
+            </if>
+            <if test = "entity.number != null">
+                <![CDATA[ AND a.number = #{entity.number} ]]>
+            </if>
+            <if test = "entity.time != null">
+                <![CDATA[ AND a.time = #{entity.time} ]]>
+            </if>
+            <if test = "entity.sum != null">
+                <![CDATA[ AND a.sum = #{entity.sum} ]]>
+            </if>
+            <if test = "entity.cash != null and entity.cash != ''">
+                <![CDATA[ AND a.cash = #{entity.cash} ]]>
+            </if>
+            <if test = "entity.visit != null and entity.visit != ''">
+                <![CDATA[ AND a.visit = #{entity.visit} ]]>
+            </if>
+            <if test = "entity.contract != null and entity.contract != ''">
+                <![CDATA[ AND a.contract = #{entity.contract} ]]>
+            </if>
+            <if test = "entity.start != null">
+                <![CDATA[ AND a.start = #{entity.start} ]]>
+            </if>
+            <if test = "entity.end != null">
+                <![CDATA[ AND a.end = #{entity.end} ]]>
+            </if>
+            <if test = "entity.closed != null and entity.closed != ''">
+                <![CDATA[ AND a.closed = #{entity.closed} ]]>
+            </if>
+            <if test = "entity.profit != null">
+                <![CDATA[ AND a.profit = #{entity.profit} ]]>
+            </if>
+            <if test = "entity.agent != null">
+                <![CDATA[ AND a.agent = #{entity.agent} ]]>
+            </if>
+            <if test = "entity.state != null and entity.state != ''">
+                <![CDATA[ AND a.state = #{entity.state} ]]>
+            </if>
+            <if test = "entity.type != null and entity.type != ''">
+                <![CDATA[ AND a.type = #{entity.type} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND a.createtime = #{entity.createtime} ]]>
+            </if>
+        </if>
+    </sql>
+
+</mapper>

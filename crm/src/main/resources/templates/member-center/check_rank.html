@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-param" content="_csrf-frontend">
+    <meta name="csrf-token" content="mfc2Qp_piabs6-GiEFWucEt5pXjk7aFi8qPKfTgOX9OvpFwE6Yb91rndpMlZBsQveS3QEbar6lOez4VEc1gPmQ==">
+    <link th:href="@{/static/ddms/css/main1.css}" rel="stylesheet">
+    <link th:href="@{/static/ddms/css/login.css}" rel="stylesheet">
+    <link th:href="@{/static/ddms/css/search_gulp.css}" rel="stylesheet">
+    <link th:href="@{/static/ddms/css/bootstrap/swiper-3.4.2.min.css}" rel="stylesheet">
+    <link th:href="@{/static/ddms/css/user.css}" rel="stylesheet">
+</head>
+<body>
+<div class="vip_row">
+    <div class="item_name" style="display: inline-block">订购功能：</div>
+    <div class="item_option query_fun_wrap" style="display: inline-block;margin-left: 0px">
+        <span class="fun_item" id="function">查排名</span>
+    </div>
+</div>
+<br>
+<div class="vip_row">
+    <div class="item_name" style="display: inline-block">功能原价：</div>
+    <div class="item_option" style="display: inline-block;margin-left: 0px">
+        <span class="price_before" id="originalPrice">20.00</span>&nbsp;&nbsp;元
+    </div>
+</div>
+<br>
+<div class="vip_row">
+    <div class="item_name" style="display: inline-block">限时价格：</div>
+    <div class="item_option" style="display: inline-block;margin-left: 0px"><span class="price" id="nowPrice">9.90</span>&nbsp;&nbsp;元
+    </div>
+</div>
+<br>
+<div class="vip_row query_ran">
+    <div class="item_name" style="display: inline-block">查询次数：</div>
+    <div class="item_option" style="display: inline-block;margin-left: 0px">
+        <span>不限次数</span>
+    </div>
+</div>
+<br>
+<div class="vip_row time_row">
+    <div class="item_name" style="display: inline-block">服务周期：</div>
+    <div class="item_option vip_time" style="display: inline-block;margin-left: 0px">
+        <button class="btn vip_time_btn active" id="serviceCycle1" onclick="fandMoney('1')">1个月</button>
+        <button class="btn vip_time_btn" id="serviceCycle6" onclick="fandMoney('6')">6个月</button>
+        <button class="btn vip_time_btn" id="serviceCycle12" onclick="fandMoney('12')">12个月</button>
+    </div>
+</div>
+<br>
+<div class="vip_row">
+    <div class="item_name" style="display: inline-block">支付方式：</div>
+    <div class="item_option pay_type" style="display: inline-block;margin-left: 0px">
+        <button class="btn pay_type_btn active" data-key="1">支付宝</button>
+        <!-- <button class="btn pay_type_btn" data-key="2">账户余额</button> -->
+    </div>
+</div>
+<br>
+<div class="vip_row">
+    <div class="item_name" style="display: inline-block"></div>
+    <div class="item_option" style="display: inline-block;margin-left: 0px">
+        <button class="btn vip_buy_btn" onclick="payment()" data-loading-text="Loading..." autocomplete="off" >限时免费</button>
+    </div>
+</div>
+
+<script th:src="@{https://hm.baidu.com/hm.js?696697aa5ab99eca019ba08eb7038b52}"></script>
+<script th:src="@{/static/ddms/js/main.js?t=0914}"></script>
+<script th:src="@{/static/ddms/js/login.js?t=?t=0727}"></script>
+<script th:src="@{/static/ddms/js/cite/swiper.min.js}"></script>
+<script th:src="@{/static/ddms/js/user.js?t=0725}"></script>
+<script th:src="@{/static/ddms/js/_vip.js?t=0912}"></script>
+<script type="text/javascript">
+    $(function() {
+        $.ajax({
+            url : "${pageContext.request.contextPath}/rankingMonitor/fandMoney",
+            data : {
+                serviceCycle:'1',
+                type:'2'
+            },
+            type : 'POST',
+            success : function(date) {
+                if(date.orderFunction=="2")
+                {
+                    var orderFunction = "查排名";
+                }
+                document.getElementById("function").innerText = orderFunction;
+                document.getElementById("originalPrice").innerText = date.originalPrice;
+                document.getElementById("nowPrice").innerText = date.nowPrice;
+            }
+        })
+    });
+
+    function fandMoney(serviceCycle) {
+        updateClass(serviceCycle);
+        $.ajax({
+            url : "${pageContext.request.contextPath}/rankingMonitor/fandMoney",
+            data : {
+                serviceCycle : serviceCycle,
+                type:'2'
+            },
+            type : 'POST',
+            success : function(date) {
+                if(date.orderFunction=="1")
+                {
+                    var orderFunction = "查排名";
+                }
+                document.getElementById("function").innerText = date.orderFunction;
+                document.getElementById("originalPrice").innerText = date.originalPrice;
+                document.getElementById("nowPrice").innerText = date.nowPrice;
+            }
+        })
+    }
+
+    var month = "1";
+    function updateClass(serviceCycle){
+        if('1' == serviceCycle){
+            month = "1";
+            document.getElementById("serviceCycle1").className = "btn vip_time_btn active";
+        }else{
+            document.getElementById("serviceCycle6").className = "btn vip_time_btn";
+            document.getElementById("serviceCycle12").className = "btn vip_time_btn";
+        }
+        if('6' == serviceCycle){
+            month = "6";
+            document.getElementById("serviceCycle6").className = "btn vip_time_btn active";
+        }else{
+            document.getElementById("serviceCycle1").className = "btn vip_time_btn";
+            document.getElementById("serviceCycle12").className = "btn vip_time_btn";
+        }
+        if('12' == serviceCycle){
+            month = "12";
+            document.getElementById("serviceCycle12").className = "btn vip_time_btn active";
+        }else{
+            document.getElementById("serviceCycle1").className = "btn vip_time_btn";
+            document.getElementById("serviceCycle6").className = "btn vip_time_btn";
+        }
+    }
+
+    function payment(){
+        window.location.href = "${pageContext.request.contextPath}/payAlipayPreController/paymentOrder?money="+$("#nowPrice").text()+"&month="+month+"";
+    }
+
+</script>
+</body>
+</html>

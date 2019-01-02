@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.CustomerDAO">
+
+    <select id="countByDepartment" resultType="Integer">
+        select count(0) from customer where 1=1 and state = 1
+        <if test="department != null and department != 0">
+            and department = #{department}
+        </if>
+        <if test="agent != null and agent != 0">
+            and agent = #{agent}
+        </if>
+    </select>
+
+    <select id="countTodayByDepartment" resultType="Integer">
+        select count(0) from customer where 1=1 and TO_DAYS(createtime) = TO_DAYS(NOW()) and state = 1
+        <if test="department != null and department != 0">
+            and department = #{department}
+        </if>
+        <if test="agent != null and agent != 0">
+            and agent = #{agent}
+        </if>
+    </select>
+
+    <select id="countGroup" resultType="java.util.Map">
+        SELECT d.name,(SELECT COUNT(0) FROM customer c WHERE state = 1 AND c.department = d.id
+        <![CDATA[ AND c.createtime >= #{start} AND c.createtime <= #{end} ]]> )AS num
+        FROM sys_department d WHERE d.level = 2
+        <if test="department != null and department != 0">
+            AND d.id = #{department}
+        </if>
+    </select>
+
+    <select id="countGroupByYear" resultType="java.util.Map">
+        SELECT m.name AS MONTH,
+        (SELECT COUNT(0) FROM customer c WHERE c.state = 1 AND c.department = #{department}
+        <if test="agent != null and agent != 0">
+            AND c.agent = #{agent}
+        </if>
+        AND YEAR(c.createtime) = #{year} AND MONTH(c.createtime) = m.name) AS num FROM months AS m WHERE 1=1
+
+    </select>
+
+    <select id="findList" resultType="java.util.Map">
+        SELECT
+        <include refid="selectColumns"/>
+        FROM customer a
+        <include refid="joins"/>
+        <include refid="where"/>
+        order by a.createtime desc
+    </select>
+
+    <sql id="selectColumns">
+        a.id AS "id",
+        a.name AS "name",
+        d.name AS "departName",
+        u.name AS "agentName",
+        a.deal AS "deal",
+        a.cash AS "cash",
+        a.type AS "type",
+        a.agent AS "agent"
+    </sql>
+    <sql id="joins">
+        JOIN sys_department d ON d.id = a.department
+        JOIN sys_user u ON u.id = a.agent
+    </sql>
+    <sql id="where">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND a.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.name != null and entity.name != ''">
+                <![CDATA[ AND a.name LIKE concat('%',#{entity.name},'%') ]]>
+            </if>
+            <if test = "entity.phone != null and entity.phone != ''">
+                <![CDATA[ AND a.phone = #{entity.phone} ]]>
+            </if>
+            <if test = "entity.email != null and entity.email != ''">
+                <![CDATA[ AND a.email = #{entity.email} ]]>
+            </if>
+            <if test = "entity.wechat != null and entity.wechat != ''">
+                <![CDATA[ AND a.wechat = #{entity.wechat} ]]>
+            </if>
+            <if test = "entity.imgA != null and entity.imgA != ''">
+                <![CDATA[ AND a.img_a = #{entity.imgA} ]]>
+            </if>
+            <if test = "entity.imgB != null and entity.imgB != ''">
+                <![CDATA[ AND a.img_b = #{entity.imgB} ]]>
+            </if>
+            <if test = "entity.company != null and entity.company != ''">
+                <![CDATA[ AND a.company = #{entity.company} ]]>
+            </if>
+            <if test = "entity.department != null">
+                <![CDATA[ AND a.department = #{entity.department} ]]>
+            </if>
+            <if test = "entity.deal != null and entity.deal != ''">
+                <![CDATA[ AND a.deal = #{entity.deal} ]]>
+            </if>
+            <if test = "entity.cash != null and entity.cash != ''">
+                <![CDATA[ AND a.cash = #{entity.cash} ]]>
+            </if>
+            <if test = "entity.agent != null">
+                <![CDATA[ AND a.agent = #{entity.agent} ]]>
+            </if>
+            <if test = "entity.zmxg != null and entity.zmxg != ''">
+                <![CDATA[ AND a.zmxg = #{entity.zmxg} ]]>
+            </if>
+            <if test = "entity.type != null and entity.type != ''">
+                <![CDATA[ AND a.type = #{entity.type} ]]>
+            </if>
+            <if test = "entity.state != null and entity.state != ''">
+                <![CDATA[ AND a.state = #{entity.state} ]]>
+            </if>
+            <if test = "entity.seas != null and entity.seas != ''">
+                <![CDATA[ AND a.seas = #{entity.seas} ]]>
+            </if>
+            <if test = "entity.createtime != null">
+                <![CDATA[ AND TO_DAYS(a.createtime) = TO_DAYS(NOW()) ]]>
+            </if>
+        </if>
+    </sql>
+
+</mapper>

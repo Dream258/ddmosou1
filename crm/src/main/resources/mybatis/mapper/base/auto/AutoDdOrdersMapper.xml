@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.AutoDdOrdersDAO">
+    <!-- 返回值映射map -->
+    <resultMap id="ddOrdersMapper" type="com.xxx.model.base.entity.DdOrders">
+        <result property="id" column="id" />
+        <result property="userTelephone" column="user_telephone" />
+        <result property="alipayNumber" column="alipay_number" />
+        <result property="orderNumber" column="order_number" />
+        <result property="goodType" column="good_type" />
+        <result property="vipTime" column="vip_time" />
+        <result property="orderMoney" column="order_money" />
+        <result property="orderCurrentDate" column="order_current_date" />
+    </resultMap>
+
+    <!-- 分页查询数据集合 -->
+    <select id="selectListByPage" resultMap="ddOrdersMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+        <if test="pager!=null">
+            <include refid="pagination_tail" />
+        </if>
+    </select>
+
+    <!-- 查询总数量 -->
+    <select id="selectCount" resultType="long">
+        <include refid="count_Tail"/>
+        <include refid="where_fragement"/>
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectOne" resultMap="ddOrdersMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectById" resultMap="ddOrdersMapper" >
+        <include refid="selectAllColumns"/>
+        WHERE record.id = #{id}
+    </select>
+
+    <!-- 新增新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.xxx.model.base.entity.DdOrders">
+        INSERT INTO dd_orders(
+            user_telephone,
+            alipay_number,
+            order_number,
+            good_type,
+            vip_time,
+            order_money,
+            order_current_date
+        ) values (
+            #{userTelephone},
+            #{alipayNumber},
+            #{orderNumber},
+            #{goodType},
+            #{vipTime},
+            #{orderMoney},
+            #{orderCurrentDate}
+        )
+    </insert>
+
+    <!-- 修改(通过ID只对不为空的内容进行修改) -->
+    <update id="updateNotNull" parameterType="com.xxx.model.base.entity.DdOrders">
+        UPDATE dd_orders record
+        <include refid="update_fragement"/>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改(通过ID更新所有属性值) -->
+    <update id="updateParams" parameterType="com.xxx.model.base.entity.DdOrders">
+        UPDATE dd_orders record
+        <set>
+            record.user_telephone = #{userTelephone},
+            record.alipay_number = #{alipayNumber},
+            record.order_number = #{orderNumber},
+            record.good_type = #{goodType},
+            record.vip_time = #{vipTime},
+            record.order_money = #{orderMoney},
+            record.order_current_date = #{orderCurrentDate}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过ID删除信息 -->
+    <delete id="deleteById">
+        DELETE FROM dd_orders
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 通过IDS批量删除 -->
+    <delete id="deleteByIds">
+        DELETE FROM dd_orders
+        WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- /////////////////// PUBLIC SQL STR ////////////////// -->
+
+    <!-- 查询数量公共sql -->
+    <sql id="count_Tail">
+        SELECT count(1) FROM dd_orders record
+    </sql>
+
+    <!-- 分页公共sql -->
+    <sql id="pagination_tail">
+        <if test="pager.orderBy != null and pager.orderBy != ''">
+            ORDER  BY  ${pager.orderBy}
+        </if>
+        limit #{pager.index} , #{pager.pageSize}
+    </sql>
+
+    <!-- 查询字段公共sql -->
+    <sql id="selectAllColumns">
+        <![CDATA[
+			SELECT
+				id,
+				user_telephone,
+				alipay_number,
+				order_number,
+				good_type,
+				vip_time,
+				order_money,
+				order_current_date
+			FROM dd_orders record
+		]]>
+    </sql>
+
+    <sql id="where_fragement">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND record.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.userTelephone != null and entity.userTelephone != ''">
+                <![CDATA[ AND record.user_telephone = #{entity.userTelephone} ]]>
+            </if>
+            <if test = "entity.alipayNumber != null and entity.alipayNumber != ''">
+                <![CDATA[ AND record.alipay_number = #{entity.alipayNumber} ]]>
+            </if>
+            <if test = "entity.orderNumber != null and entity.orderNumber != ''">
+                <![CDATA[ AND record.order_number = #{entity.orderNumber} ]]>
+            </if>
+            <if test = "entity.goodType != null and entity.goodType != ''">
+                <![CDATA[ AND record.good_type = #{entity.goodType} ]]>
+            </if>
+            <if test = "entity.vipTime != null">
+                <![CDATA[ AND record.vip_time = #{entity.vipTime} ]]>
+            </if>
+            <if test = "entity.orderMoney != null">
+                <![CDATA[ AND record.order_money = #{entity.orderMoney} ]]>
+            </if>
+            <if test = "entity.orderCurrentDate != null">
+                <![CDATA[ AND record.order_current_date = #{entity.orderCurrentDate} ]]>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 公共修改sql-->
+    <sql id="update_fragement">
+        <set>
+            <if test = "userTelephone != null and userTelephone != ''">
+                record.user_telephone = #{userTelephone},
+            </if>
+            <if test = "alipayNumber != null and alipayNumber != ''">
+                record.alipay_number = #{alipayNumber},
+            </if>
+            <if test = "orderNumber != null and orderNumber != ''">
+                record.order_number = #{orderNumber},
+            </if>
+            <if test = "goodType != null and goodType != ''">
+                record.good_type = #{goodType},
+            </if>
+            <if test = "vipTime != null ">
+                record.vip_time = #{vipTime},
+            </if>
+            <if test = "orderMoney != null ">
+                record.order_money = #{orderMoney},
+            </if>
+            <if test = "orderCurrentDate != null ">
+                record.order_current_date = #{orderCurrentDate}
+            </if>
+        </set>
+    </sql>
+    <!-- /////////////////// PUBLIC SQL END ////////////////// -->
+</mapper>

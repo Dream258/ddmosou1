@@ -1,0 +1,374 @@
+.banner {
+	text-align: center;
+	margin: 60px 0 50px;
+	color: #556CED
+}
+
+.banner>h1 {
+	font-size: 50px;
+	margin-bottom: 22px
+}
+
+.banner>h2 {
+	font-size: 40px
+}
+
+.nav_header_wrap .nav-tabs {
+	text-align: center;
+	margin-bottom: 15px;
+	border-bottom: 1px solid #556CED
+}
+
+.dd_header_wrap {
+	-webkit-box-shadow: none;
+	box-shadow: none
+}
+
+.dd_header_wrap.active {
+	-webkit-box-shadow: 0 2px 4px 0 rgba(149, 149, 149, .43);
+	box-shadow: 0 2px 4px 0 rgba(149, 149, 149, .43)
+}
+
+.nav_header_wrap .nav-tabs>li {
+	float: none;
+	width: 140px;
+	display: inline-block;
+	position: relative;
+	margin-right: 10px;
+	border: 1px solid #556CED;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px
+}
+
+.nav_header_wrap .nav-tabs>li h2 {
+	font-size: 16px;
+	color: #556CED;
+	height: 50px;
+	padding: 0 5px;
+	margin: 0;
+	line-height: 50px;
+	cursor: pointer
+}
+
+.nav_header_wrap .nav-tabs>li.active h2 {
+	background: #556CED;
+	color: #fff
+}
+
+.nav_header_wrap .nav-tabs>li.queryComment .icon-alone,
+.nav_header_wrap .nav-tabs>li.queryWeight .icon-alone {
+	width: 60px;
+	position: absolute;
+	top: -5px;
+	right: -12px
+}
+
+.form_wrap {
+	margin: 20px auto;
+	width: 100%
+}
+
+.form_wrap .form1,
+.form_wrap .form2,
+.form_wrap .form3 {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 700px
+}
+
+.item_wrap {
+	line-height: 34px;
+	margin-bottom: 22px
+}
+
+.item_name {
+	width: 150px;
+	float: left;
+	text-align: right
+}
+
+.item_option {
+	margin-left: 150px
+}
+
+.item_option .activity,
+.item_option .category {
+	width: 95%
+}
+
+.item_wrap .item_option {
+	position: relative
+}
+
+.item_wrap .item_option .user-ul {
+	width: 100%;
+	max-height: 200px;
+	background: #fff;
+	overflow: hidden;
+	overflow-y: auto;
+	position: absolute;
+	top: 35px;
+	left: 0;
+	border: 1px solid #ddd;
+	z-index: 100540;
+	display: none
+}
+
+.item_wrap .item_option .user-ul li {
+	line-height: 20px;
+	padding: 5px;
+	cursor: pointer;
+	position: relative
+}
+
+.item_wrap .item_option .user-ul li>i {
+	position: absolute;
+	right: 8px;
+	top: 8px;
+	color: #1e88f5;
+	font-size: 16px;
+	z-index: 10
+}
+
+.item_wrap .item_option .user-ul li:hover {
+	background: #2b91f5;
+	color: #fff
+}
+
+.item_wrap .item_option .user-ul li:hover>i {
+	color: #fff
+}
+
+.form_footer {
+	text-align: center;
+	padding-top: 15px
+}
+
+.form_footer .form_submit {
+	width: 300px;
+	height: 50px;
+	font-size: 20px;
+	color: #fff;
+	background: #556CED
+}
+
+.form_wrap .choose_btn,
+.form_wrap .keyword_btn,
+.form_wrap .keyword_btn1 {
+	width: 92px;
+	background: #fff;
+	border: 1px solid #999;
+	color: #666;
+	margin-right: 5px;
+	margin-bottom: 3px;
+	-webkit-box-shadow: none;
+	box-shadow: none
+}
+
+.form_wrap .keyword_btn1.only_btn {
+	width: auto;
+	background: #fff
+}
+
+.form_wrap .choose_btn.active,
+.form_wrap .keyword_btn.active {
+	border: 1px solid #556CED;
+	color: #fff;
+	background: #556CED
+}
+
+.keyword_btn1.active {
+	border: 1px solid #556CED;
+	color: #556CED
+}
+
+.keyword_btn1 i {
+	display: none
+}
+
+.item_option .dropdown,
+.keyword_btn1.active i {
+	display: inline-block
+}
+
+.activity_form,
+.category_form,
+.choose_box,
+.fix_bottom,
+.result_wrap .result_wrap_table {
+	display: none
+}
+
+.dropdown-menu .overall.active {
+	background: #556CED;
+	color: #fff
+}
+
+.result_wrap .result_wrap_table h1 {
+	text-align: center;
+	margin: 30px auto 10px
+}
+
+.result_wrap .result_wrap_table .result_title {
+	font-size: 12px;
+	color: red;
+	text-align: center;
+	margin-bottom: 30px
+}
+
+.result_wrap .result_wrap_table .result_title1 {
+	font-size: 12px;
+	color: #ff7400;
+	text-align: center;
+	margin-bottom: 10px
+}
+
+.result_wrap .table tr.active>td {
+	background: #556CED!important;
+	color: #fff;
+	text-align:center
+}
+
+.result_wrap .table th {
+	font-weight: 700;
+	text-align:center;
+}
+
+.result_wrap .table td,
+.result_wrap .table th,
+.result_wrap .table th .th-inner {
+	max-width: 200px;
+	border: none
+}
+
+.result_wrap .table .td_img {
+	width: 33%;
+	float: left;
+	text-align: right;
+	position: relative
+}
+
+.result_wrap .table .td_url {
+	width: 65%;
+	margin-left: 2%;
+	float: left;
+	text-align: left;
+	vertical-align: middle
+}
+
+.result_wrap .table img {
+	width: 60px;
+	height: 60px
+}
+
+.result_wrap .table .td_img .double11_p {
+	color: #dc1d20;
+	margin: 0
+}
+
+.result_wrap .table>tbody>tr>td a {
+	color: #0D253E
+}
+
+.result_wrap .table>tbody>tr.active {
+	background: #1e88f5
+}
+
+.result_wrap .table>tbody>tr.active>td,
+.result_wrap .table>tbody>tr.active>td a {
+	color: #fff
+}
+
+.ran {
+	color: red;
+	margin: 0 2px
+}
+
+@media screen and (max-width:768px) {
+	.nav_header_wrap .nav-tabs.nav>li {
+		width: 30%;
+		margin-right: 1%
+	}
+	.nav_header_wrap .nav-tabs>li h2 {
+		font-size: 14px
+	}
+	.nav_header_wrap .nav-tabs>li.queryComment .icon-alone,
+	.nav_header_wrap .nav-tabs>li.queryWeight .icon-alone {
+		top: -7px!important;
+		right: -8px!important
+	}
+}
+
+@media screen and (max-width:320px) {
+	.nav_header_wrap .nav-tabs>li h2 {
+		font-size: 14px;
+		padding: 0 2px
+	}
+}
+
+#activity1 {
+	width: 98%
+}
+
+select.form-control option {
+	line-height: 30px
+}
+
+.fix_bottom {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 200px;
+	background: rgba(154, 175, 203, .5)
+}
+
+.fix_bottom .fix_bottom_inner {
+	max-width: 1200px;
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;
+	padding-top: 50px;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	position: relative
+}
+
+.fix_bottom .fix_bottom_inner .btn_wrap {
+	margin-top: 30px;
+	text-align: right
+}
+
+.fix_bottom .fix_bottom_inner img {
+	margin-top: 15px
+}
+
+.fix_bottom .fix_bottom_inner .btn_wrap .btn {
+	width: 120px;
+	border: 1px solid #556CED;
+	height: 36px;
+	margin-right: 30px;
+	background: #fff;
+	color: #556CED;
+	border-radius: 4px
+}
+
+.fix_bottom .fix_bottom_inner .btn_wrap .login_btn {
+	background: #556CED;
+	color: #fff
+}
+
+.fix_bottom .close_float_wrap {
+	position: absolute;
+	right: 50px;
+	top: 20px
+}
+
+.fix_wrap {
+	position: relative
+}
+
+.fix_bottom .fix_wrap .close_float_wrap i {
+	font-size: 24px;
+	cursor: pointer
+}

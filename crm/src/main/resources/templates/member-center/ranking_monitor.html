@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="csrf-param" content="_csrf-frontend">
+        <meta name="csrf-token" content="mfc2Qp_piabs6-GiEFWucEt5pXjk7aFi8qPKfTgOX9OvpFwE6Yb91rndpMlZBsQveS3QEbar6lOez4VEc1gPmQ==">
+        <link th:href="@{/static/ddms/css/main1.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/login.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/search_gulp.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/bootstrap/swiper-3.4.2.min.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/user.css}" rel="stylesheet">
+    </head>
+
+<body>
+<div class="vip_row">
+    <div class="item_name">订购功能：</div>
+    <div class="item_option query_fun_wrap">
+        <span class="fun_item" id="function"></span>
+    </div>
+</div>
+<div class="vip_row">
+    <div class="item_name">功能原价：</div>
+    <div class="item_option"><span class="price_before" id="originalPrice">20.00</span>&nbsp;&nbsp;元</div>
+</div>
+<div class="vip_row">
+    <div class="item_name">限时价格：</div>
+    <div class="item_option"><span class="price" id="nowPrice">9.90</span>&nbsp;&nbsp;元</div>
+</div>
+<div class="vip_row query_con">
+    <div class="input_box">
+        <div class="item_name">可监控宝贝数：</div>
+        <div class="item_option">
+            <span class="query_num" id="number">1</span>&nbsp;个
+        </div>
+    </div>
+</div>
+<div class="vip_row time_row">
+    <div class="item_name">服务周期：</div>
+    <div class="item_option vip_time">
+        <button class="btn vip_time_btn active" id="serviceCycle1" onclick="fandMoney('1')">1个月</button>
+        <button class="btn vip_time_btn" id="serviceCycle6" onclick="fandMoney('6')">6个月</button>
+        <button class="btn vip_time_btn" id="serviceCycle12" onclick="fandMoney('12')">12个月</button>
+    </div>
+</div>
+<div class="vip_row">
+    <div class="item_name">支付方式：</div>
+    <div class="item_option pay_type">
+        <button class="btn pay_type_btn active" onclick="payment()">支付宝</button>
+        <!-- <button class="btn pay_type_btn" data-key="2">账户余额</button> -->
+    </div>
+</div>
+<div class="vip_row">
+    <div class="item_name"></div>
+    <div class="item_option">
+        <button class="btn vip_buy_btn" onclick="payment()" data-loading-text="Loading..." autocomplete="off">立即购买</button>
+    </div>
+</div>
+<script th:src="@{https://hm.baidu.com/hm.js?696697aa5ab99eca019ba08eb7038b52}"></script>
+<script th:src="@{/static/ddms/js/main.js?t=0914}"></script>
+<script th:src="@{/static/ddms/js/login.js?t=?t=0727}"></script>
+<script th:src="@{/static/ddms/js/bootstrap/bootstrap-table.js}"></script>
+<script th:src="@{/static/ddms/js/index.js}"></script>
+<script th:src="@{/static/ddms/js/cite/swiper.min.js}"></script>
+<script th:src="@{/static/ddms/js/user.js?t=0725}"></script>
+<script th:src="@{/static/ddms/js/_vip.js?t=0912}"></script>
+<script type="text/javascript">
+    $(function() {
+        $.ajax({
+            url : "fandMoney",
+            data : {
+                serviceCycle:'1',
+                type:'1'
+            },
+            type : 'POST',
+            success : function(data) {
+                if(data.orderFunction=="1")
+                {
+                    var orderFunction = "排名监控";
+                }
+                document.getElementById("function").innerText = orderFunction;
+                document.getElementById("originalPrice").innerText = data.originalPrice;
+                document.getElementById("nowPrice").innerText = data.nowPrice;
+                document.getElementById("number").innerText = data.monitorBabyNum;
+            }
+        })
+    });
+
+    function fandMoney(serviceCycle) {
+        updateClass(serviceCycle);
+        $.ajax({
+            url : "fandMoney",
+            data : {
+                serviceCycle : serviceCycle,
+                type:'1'
+            },
+            type : 'POST',
+            success : function(data) {
+                if(data.orderFunction=="1")
+                {
+                    var orderFunction = "排名监控";
+                }
+                document.getElementById("function").innerText = orderFunction;
+                document.getElementById("originalPrice").innerText = data.originalPrice;
+                document.getElementById("nowPrice").innerText = data.nowPrice;
+                document.getElementById("number").innerText = data.monitorBabyNum;
+            }
+        })
+    }
+
+    var month = "1";
+    function updateClass(serviceCycle){
+        if('1' == serviceCycle){
+            month = "1";
+            document.getElementById("serviceCycle1").className = "btn vip_time_btn active";
+        }else{
+            document.getElementById("serviceCycle6").className = "btn vip_time_btn";
+            document.getElementById("serviceCycle12").className = "btn vip_time_btn";
+        }
+        if('6' == serviceCycle){
+            month = "6";
+            document.getElementById("serviceCycle6").className = "btn vip_time_btn active";
+        }else{
+            document.getElementById("serviceCycle1").className = "btn vip_time_btn";
+            document.getElementById("serviceCycle12").className = "btn vip_time_btn";
+        }
+        if('12' == serviceCycle){
+            month = "12";
+            document.getElementById("serviceCycle12").className = "btn vip_time_btn active";
+        }else{
+            document.getElementById("serviceCycle1").className = "btn vip_time_btn";
+            document.getElementById("serviceCycle6").className = "btn vip_time_btn";
+        }
+    }
+
+
+
+    //订单号，订单名称，金额，描述
+    function payment(){
+        var vNow = new Date();
+        var sNow = "";
+        sNow += String(vNow.getFullYear());
+        sNow += String(vNow.getMonth() + 1);
+        sNow += String(vNow.getDate());
+        sNow += String(vNow.getHours());
+        sNow += String(vNow.getMinutes());
+        sNow += String(vNow.getSeconds());
+        sNow += String(vNow.getMilliseconds());
+
+
+        //window.location.href = "${pageContext.request.contextPath}/pay/alipay.trade.page.pay.jsp?WIDout_trade_no="+encodeURI(encodeURI(sNow))+"&WIDsubject="+encodeURI(encodeURI($("#function").text()))+"&WIDtotal_amount="+encodeURI(encodeURI($("#nowPrice").text()))+"&WIDbody="+encodeURI(encodeURI(month))+"";
+        //window.location.href = "${pageContext.request.contextPath}/pay/alipay.trade.page.pay.jsp?WIDout_trade_no="+sNow+"&WIDsubject="+$("#function").text()+"&WIDtotal_amount="+$("#nowPrice").text()+"&WIDbody="+month+"";
+        window.location.href = "/alipay/paymentOrder?WIDout_trade_no="+sNow+"&WIDsubject="+$("#function").text()+"&WIDtotal_amount="+$("#nowPrice").text()+"&WIDbody="+month+"";
+    }
+    /* function payment(){
+        window.location.href = "${pageContext.request.contextPath}/payAlipayPreController/paymentOrder?money="+$("#nowPrice").text()+"&month="+month+"";
+    } */
+
+</script>
+</body>
+</html>

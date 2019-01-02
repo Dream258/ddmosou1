@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+        <title>拼多多查排名_拼多多排名查询_拼多多魔盒 拼多多直通车查询平台</title>
+        <meta name="keyword" content="拼多多排名查询 拼多多查排名 拼多多排名查询软件 拼多多排名查询工具 拼多多直通车查询 拼多多关键词排名查询">
+        <meta name="description" content="拼多多查排名平台是拼多多排名查询软件 拼多多排名查询工具,提供拼多多排名查询,拼多多直通车查询,拼多多关键词直通车查询,便于商家优化拼多多排名">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link th:href="@{/static/ddms/img/logo.png}" type="image/x-icon" rel="shortcut icon">
+        <meta name="csrf-param" content="_csrf-frontend">
+    	<meta name="csrf-token" content="QRGKBDnvOOWDNd1dmNEOsiw_BqEec7__BcMqGG3qTYR3QuBCT4BMldYDmDbRgmTtHmtzyEw19M5pr2UhJrwdzg==">
+        <link th:href="@{/static/ddms/css/main1.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/login.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/search_gulp.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/bootstrap/bootstrap-table.min.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/bootstrap/bootstrap-tagsinput.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/bootstrap/pagination.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/index.css}" rel="stylesheet">
+        <link th:href="@{/static/ddms/css/ranking.css}" rel="stylesheet">
+        <script type="text/javascript" th:src="@{/static/ddms/jquery/jquery-1.4.4.min.js}"></script>
+        <script type="text/javascript" th:src="@{/static/ddms/js/myForm.js}"></script>
+		<style>
+			.mytable{ border:1px solid #f5f5f5; margin-top:25px; padding-bottom:50px; display:none}
+			.mytable:first-child{ display:block}
+			.mytable .top{ overflow:hidden; padding:10px 2%}
+			.mytable .top .left{ width:30%; float:left;}
+			.mytable .top .left dt{ width:20%; float:left; margin-right:2%}
+			.mytable .top .left dt img{ width:100%}
+			.mytable .top .left dd{ line-height:30px}
+			.mytable .top .left dd.gray{ color:#989A9C}
+			.mytable .top .right{ width:60%; float:right;}
+			.mytable .top .right { text-align:right; padding-top:5px; padding-right:5px}
+			.mytable .top .right a.add{ display:inline-block; width:100px; line-height:40px; text-align:center; background-color:#556CED; color:#fff; border-radius:5px}
+			.mytable .top .right a.del{ display:inline-block; width:80px; line-height:40px; text-align:center; background-color:#fff; color:#556CED; border-radius:5px; border:1px solid #556CED}
+			.mytable table{ width:96%; border-radius:5px; margin:10px auto 0}
+			.mytable table th,td{ line-height:35px; text-align:center; border:1px solid #ccc}
+			.mytable table th{ background-color:#f5f5f5}
+			.mytable table td a{ color:#fff; background-color:#556CED; text-align:center; display:inline-block; width:60px; line-height:25px; font-size:14px; border-radius:6px}
+			.modal-content{ padding-bottom:20px}
+			.modal-content h3{ line-height:70px; text-align:center}
+			.modal-content form{ width:70%; margin:0 auto}
+			.modal-content form input{ line-height:35px; border-radius:5px; width:80%; border:none; border:1px solid #ccc}
+			.modal-content form .btn1,.btn2{ width:90px; margin-top:40px}
+			.modal-content form .btn1{ margin-left:30%}
+			.modal-content dl{ overflow:hidden; padding:5px 2%; border-bottom:1px solid #ccc; width:100%}
+			.modal-content dl dt{ width:16%; float:left; margin-right:2%}
+			.modal-content dl dt img{ width:100%}
+			.modal-content dl dd{ line-height:50px; font-size:16px}
+			.modal-content dl dd.gray{ color:#989A9C}
+			.modal-content h5{ color:#556CED; padding-left:2%; line-height:40px; font-weight:bold}
+			.modal-content .tab{ padding-left:2%}
+			.modal-content .tab a{ padding-right:2%; color:#666}
+			.modal-content .tabs #main2,#main3{ display:none}
+			.modal-content .tabs #main1{ display:block}
+		</style>
+	</head>
+	<body>
+    <header th:include="include :: header"></header>
+
+<!-- Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel">
+    <div class="modal-feedback" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="head_box">
+                    <div class="close feedClose" data-dismiss="modal" aria-label="Close"><span>×</span></div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal_body_box row">
+                    <div class="row">
+                        <div class="feedback_name"><div class="name_block"></div>意见所属类别</div>
+                        <div class="feedback_option">
+                            <button class="btn btn-item active" data-status="1">我要新功能</button>
+                            <button class="btn btn-item" data-status="2">错误信息</button>
+                            <button class="btn btn-item" data-status="3">产品建议</button>
+                            <button class="btn btn-item" data-status="4">吐槽</button>
+                            <button class="btn btn-item" data-status="5">其他</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="feedback_name"><div class="name_block"></div>反馈内容</div>
+                        <div class="feedback_option">
+                            <textarea type="text" class="form-control advise_form" id="content" placeholder="写下您希望增加的新功能，或者对魔盒的意见或建议。（一经采用将会给您予以积分奖励）"></textarea>
+                            <div class="block_error" for="content"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="feedback_name"><div class="name_block"></div>联系方式<b style="font-size:12px">(非必填)</b></div>
+                        <div class="feedback_option">
+                            <input class="form-control" type="phone" id="contact" placeholder="留下电话或邮箱，方便我们联系您哦">
+                            <div class="block_error" for="content"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="modal_body_box row">
+                    <div class="row">
+                        <button type="button" class="btn feedback_submit">提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="jd_menu_remove">
+    <div class="jd_remove_item">
+        <i class="iconfont icon-kefu icon"></i><br>
+        咨询
+    </div>
+    <div class="feedback tada hidden" id="feedback" data-toggle="modal" data-target="#feedbackModal">
+        <!--img src="http://jdmohe.ufile.ucloud.com.cn/web/feedback.png">
+        <img src="http://jdmohe.ufile.ucloud.com.cn/web/feedback1.png"-->
+    </div>
+</div>
+<div class="consult-wrapper">
+    <div class="header-phone-close">
+        <i class="icon consult-phone-close iconfont icon-cuowu"></i>
+    </div>
+    <div class="consult-phone-wrapper">
+        <h3>联系我们</h3>
+        <div class="consult-phone-btn">
+            <button class="btn"><img src="img/QQ.png">QQ咨询</button>
+        </div>
+        <div class="qq-text">
+
+        </div>
+        <div class="weixin-text">
+            扫一扫&nbsp;<img src="img/weixin.png">&nbsp;加微信
+        </div>
+        <div class="erweima-text">
+            <img class="wechartCode" src="img/we.jpg">
+        </div>
+        <div class="erweima-text1">
+
+        </div>
+    </div>
+</div>
+
+<div class="dd_content_wrap dd_container dd_other">
+    <div class="row ran_header">
+        <div class="col-md-10 dd_ranking">
+            <ul class="dd_nav clearfix">
+               <li class="nav_li active nav_li2" data-key="2"><a href="javascript:;">关键词排名监控</a></li>
+               <li class="nav_li nav_li1" data-key="1"><a href="javascript:;">类目排名监控</a></li>
+               <li class="nav_li nav_li3" data-key="3"><a href="javascript:;">活动排名监控</a></li>
+            </ul>
+        </div>
+        <div class="col-md-2 dd_add_box">
+            <button class="btn dd_add_btn" type="button" data-toggle="modal" data-target="#addGoodModal">+添加商品</button>
+        </div>
+    </div>
+    <!--修改-->
+    <div class='contents'>
+		<div class='mytable'>
+			<div class='top'>
+				<dl class='left'>
+					<dt><img src='img/character.jpg'></dt>
+					<dd>你个傻子哈哈哈哈111</dd>
+					<dd class='gray'>商品id:0498548957408</dd>
+				</dl>
+				<div class='right'>
+					<a href='#' class='add' data-toggle="modal" data-target="#myModal">+添加关键词</a>
+					<a href='#' class='del'>删除</a>
+				</div>
+			</div>
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<h3>添加关键词</h3>
+						<form>
+							关键词：<input type='text' />
+							<button type="button" class="btn btn-primary btn1">确定</button>
+							<button type="button" class="btn btn-default btn2" data-dismiss="modal">取消</button>
+						</form>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+			<table>
+				<tr>
+					<th>关键词</th>
+					<th>最后更新时间</th>
+					<th>单价</th>
+					<th>团购价</th>
+					<th>销量</th>
+					<th>排名</th>
+					<th>操作</th>
+				</tr>
+				<tr>
+					<td>你个傻子</td>
+					<td>2019-09-09 09:09:09</td>
+					<td>0.00</td>
+					<td>0.00</td>
+					<td>23</td>
+					<td>2</td>
+					<td><a href='#' data-toggle="modal" data-target="#myModal1">走势</a></td>
+				</tr>
+			</table>
+			<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content big">
+						<dl>
+							<dt><img src='img/character.jpg'></dt>
+							<dd>你个傻子哈哈哈哈111</dd>
+							<dd class='gray'>商品id:0498548957408</dd>
+						</dl>
+						<h5>商品排名走势折线图</h5>
+						<div class='tab'><a href='#'>近7天</a><a href='#'>近15天</a><a href='#'>近30天</a></div>
+						<div class='tabs'>
+							<div id="main1" style="width: 600px;height:300px"></div>
+							<div id="main2" style="width: 600px;height:300px"></div>
+							<div id="main3" style="width: 600px;height:300px"></div>
+						</div>
+					</div><!-- /.modal-content -->
+				</div><!-- /.modal -->
+			</div>
+		</div><!--/mytable-->
+		<div class='mytable'>
+			<div class='top'>
+				<dl class='left'>
+					<dt><img src='img/character.jpg'></dt>
+					<dd>你个傻子哈哈哈哈222</dd>
+					<dd class='gray'>商品id:0498548957408</dd>
+				</dl>
+				<div class='right'>
+					<a href='#' class='add'>+添加关键词</a>
+					<a href='#' class='del'>删除</a>
+				</div>
+			</div>
+			<table>
+				<tr>
+					<th>关键词</th>
+					<th>最后更新时间</th>
+					<th>单价</th>
+					<th>团购价</th>
+					<th>销量</th>
+					<th>排名</th>
+					<th>操作</th>
+				</tr>
+				<tr>
+					<td>你个傻子</td>
+					<td>2019-09-09 09:09:09</td>
+					<td>0.00</td>
+					<td>0.00</td>
+					<td>23</td>
+					<td>2</td>
+					<td><a href='#'>走势</a></td>
+				</tr>
+			</table>
+		</div><!--/mytable-->
+		<div class='mytable'>
+			<div class='top'>
+				<dl class='left'>
+					<dt><img src='img/character.jpg'></dt>
+					<dd>你个傻子哈哈哈哈333</dd>
+					<dd class='gray'>商品id:0498548957408</dd>
+				</dl>
+				<div class='right'>
+					<a href='#' class='add'>+添加关键词</a>
+					<a href='#' class='del'>删除</a>
+				</div>
+			</div>
+			<table>
+				<tr>
+					<th>关键词</th>
+					<th>最后更新时间</th>
+					<th>单价</th>
+					<th>团购价</th>
+					<th>销量</th>
+					<th>排名</th>
+					<th>操作</th>
+				</tr>
+				<tr>
+					<td>你个傻子</td>
+					<td>2019-09-09 09:09:09</td>
+					<td>0.00</td>
+					<td>0.00</td>
+					<td>23</td>
+					<td>2</td>
+					<td><a href='#'>走势</a></td>
+				</tr>
+			</table>
+		</div><!--/mytable-->
+	</div><!--/contents-->
+	<!--/修改-->
+    <!--<div class="tableBox user-content-wrapper">
+        <div class="loadingLog" style="display: none;">
+            <div class="spinner">
+                <p class="spinner_tips"></p>
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </div>
+        <div class="ran_table goods_wrap" id="rankingTable">
+            <div class="item_wrap"></div>
+            <div class="pagination-box">
+                <div class="M-box M-box1"></div>
+            </div>
+        </div>
+        <div class="ran_table goods_wrap" id="keywordTable">
+            <div class="item_wrap"><div class="item_wrap row" style="text-align: center; color: red;">没有添加监控商品</div></div>
+            <div class="pagination-box">
+                <div class="M-box M-box2" style="display: none;"><span class="active">1</span></div>
+            </div>
+        </div>
+        <div class="ran_table goods_wrap" id="activityTable">
+            <div class="item_wrap"></div>
+            <div class="pagination-box">
+                <div class="M-box M-box3"></div>
+            </div>
+        </div>
+    </div>-->
+</div>
+
+<!-- Modal -->
+<div class="modal rankingModal" id="addGoodModal" tabindex="-1" role="dialog" aria-labelledby="addGoodModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title" id="addGoodModalLabel">添加商品</h4>
+      </div>
+      <div class="modal-body">
+           <div class="row add_input_wrap form_wrap">
+               <div class="add_input_inner item_wrap row">
+                    <div class="item_name">
+                        添加方式：
+                    </div>
+                    <div class="item_option add_type">
+                        <label class="radio-inline">
+                          <input type="radio" name="inlineRadioOptions" id="ranking2" value="2" checked=""> 关键词排名
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="inlineRadioOptions" id="ranking1" value="1"> 类目排名
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="inlineRadioOptions" id="ranking3" value="3"> 活动排名
+                        </label>
+                    </div>
+               </div>
+               <div class="form1">
+<div class="row item_wrap">
+    <lable class="item_name">
+        选择类目：
+    </lable>
+    <div class="item_option">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <select name="category1" data-key="1" class="form-control category" id="category1">
+                <option value="0">一级类目</option>
+            </select>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <select name="category2" data-key="2" class="form-control category" id="category2">
+                <option value="0">二级类目</option>
+            </select>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <select name="category3" data-key="3" class="form-control category keyword" id="category3">
+                <option value="0">三级类目</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="row item_wrap">
+    <lable class="item_name">
+        商品链接或ID：
+    </lable>
+    <div class="item_option user-ul-box">
+        <i class="glyphicon glyphicon-remove close_i"></i>
+        <input type="text" class="form-control keyword_sku" id="category_sku" autocomplete="off" placeholder="输入商品链接或ID">
+        <ul class="user-ul"></ul>
+    </div>
+</div>
+</div>
+               <div class="form2">
+<div class="row item_wrap">
+    <lable class="item_name">
+        关键词：
+    </lable>
+    <div class="item_option user-ul-box">
+        <i class="glyphicon glyphicon-remove close_i"></i>
+        <input type="text" class="form-control keyword" id="keyword_form" autocomplete="off" placeholder="输入关键词">
+        <ul class="user-ul keyword-ul"></ul>
+    </div>
+</div>
+
+<div class="row item_wrap">
+    <lable class="item_name">
+        商品链接或ID：
+    </lable>
+    <div class="item_option user-ul-box">
+        <i class="glyphicon glyphicon-remove close_i"></i>
+        <input type="text" class="form-control keyword_sku" id="keyword_sku" autocomplete="off" placeholder="输入商品链接或ID">
+        <ul class="user-ul"></ul>
+    </div>
+</div>
+
+<div class="row item_wrap ran_hide">
+    <lable class="item_name">
+        排序类型：
+    </lable>
+    <div class="item_option keyword_type">
+        <div class="dropdown">
+            <button class="btn keyword_btn dropdown-toggle active" key="1" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="dropdown_text">综合排序</span> <span class="caret"></span></button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="javascript:;" class="keyword overall overall1 active" key="1">综合排序</a></li>
+                <li><a href="javascript:;" class="keyword overall overall2" key="2">评分排序</a></li>
+            </ul>
+        </div>
+        <button class="btn keyword_btn keyword" key="3">销量</button>
+        <button class="btn keyword_btn keyword" key="4">价格<i class="iconfont icon-jiantoushangsheng"></i></button>
+        <button class="btn keyword_btn keyword" key="5">价格<i class="iconfont icon-jiantouxiajiang"></i></button>
+    </div>
+</div>
+
+<div class="row item_wrap ran_hide">
+    <lable class="item_name">
+    </lable>
+    <div class="item_option">
+        <button class="btn choose_btn">筛选 <i class="iconfont icon-jiantouxiangshang"></i></button>
+    </div>
+</div>
+
+<div class="choose_box ran_hide">
+    <div class="row item_wrap">
+        <lable class="item_name">
+            价格区间：
+        </lable>
+        <div class="item_option price_wrap">
+            <button class="btn keyword_btn1 disabled" key="1" autocomplete="off" disabled="disabled">loading...</button>
+            <button class="btn keyword_btn1 disabled" key="2" autocomplete="off" disabled="disabled">loading...</button>
+            <button class="btn keyword_btn1 disabled" key="3" autocomplete="off" disabled="disabled">loading...</button>
+            <button class="btn keyword_btn1 disabled" key="4" autocomplete="off" disabled="disabled">loading...</button>
+        </div>
+    </div>
+
+    <div class="row item_wrap">
+        <lable class="item_name">
+            拼单状态：
+        </lable>
+        <div class="item_option">
+            <button class="btn keyword_btn1 only_btn"><i class="glyphicon glyphicon-ok"></i> 仅看有人正在拼单的商品</button>
+        </div>
+    </div>
+</div>
+</div>               <div class="form3">
+<div class="row item_wrap">
+    <lable class="item_name">
+        活动类型：
+    </lable>
+    <div class="item_option activity_home">
+        <button class="btn keyword_btn activity_btn active activity1" data-key="4">首页活动</button>
+        <button class="btn keyword_btn activity_btn activity2 hidden" data-key="3">新品活动</button>
+    </div>
+</div>
+
+<div class="row item_wrap activity_box">
+    <lable class="item_name">
+        活动入口：
+    </lable>
+    <div class="item_option">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <select name="activity1" class="form-control activity_sel" id="activity1">
+                
+            <option value="9块9特卖">9块9特卖</option><option value="爱逛街">爱逛街</option><option value="食品超市">食品超市</option><option value="时尚穿搭">时尚穿搭</option></select>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+            <select name="activity2" class="form-control activity_sel keyword" id="activity2">
+                
+            <option value="18">精选</option><option value="31">每日抢新</option><option value="90">热销榜</option><option value="20">女装</option><option value="19">百货</option><option value="23">美妆</option><option value="21">食品</option><option value="22">母婴</option><option value="121">鞋包</option><option value="147">男装</option><option value="24">数码电器</option><option value="93">配饰</option><option value="92">内衣</option><option value="138">办公文具</option><option value="131">家纺家具</option><option value="132">车品</option></select>
+        </div>
+    </div>
+</div>
+
+<div class="row item_wrap">
+    <lable class="item_name">
+        商品链接或ID：
+    </lable>
+    <div class="item_option user-ul-box">
+        <i class="glyphicon glyphicon-remove close_i"></i>
+        <input type="text" class="form-control keyword_sku" autocomplete="off" placeholder="输入商品链接或ID" id="actSku">
+        <ul class="user-ul"></ul>
+    </div>
+</div>
+</div>           </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary add_keywords_sure">确定</button>
+        <button type="button" class="btn btn-default add_keywords_close" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal rankingModal dd_keywords_wrap" id="addKeywordModal" tabindex="-1" role="dialog" aria-labelledby="addKeywordModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="addKeywordModalLabel">添加关键词</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row add_input_wrap">
+                    <div class="add_input_inner add_input_inner1 row">
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 add_input_name">
+                            关键词：
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-9 col-xs-9 add_input_option">
+                            <input autocomplete="off" class="form-control" id="addKeyword1" placeholder="请输入关键词">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary add_keywords_sure1">确定</button>
+                <button type="button" class="btn btn-default add_keywords_close" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade rankingModal" id="deleteTableModal" tabindex="-1" role="dialog" aria-labelledby="deleteTableModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="deleteTableModalLabel">提示</h4>
+            </div>
+            <div class="modal-body" style="text-align:center">
+                <p class="delete_text">您是否要删除？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">否</button>
+                <button type="button" class="btn btn-primary delete_sure_btn">是</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade bs-example-modal-lg" id="queryModal" tabindex="-1" role="dialog" aria-labelledby="queryModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+          <div class="row header_goods">
+              <div class="col-md-2 goods_img_box"><img class="goods_img_span" src="img/logo.png"></div>
+              <div class="col-md-10">
+                  <p class="goods_name_span"></p>
+                      <div class="goods_id">
+                      <span>
+                          商品id：<span class="goods_id_span"></span>
+                      </span>
+                      <span class="goods_type">
+
+                      </span>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="clearfix query_details">
+            <h3 class="canvas_title">商品排名走势折线图</h3>
+            <div class="canvas_hea time_hea">
+                <label><span>时间：</span></label>
+                <label class="radio-inline">
+                  <input type="radio" name="time" id="radio1" value="7" checked=""> 近7天
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="time" id="radio2" value="15"> 近15天
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="time" id="radio3" value="30"> 近30天
+                </label>
+            </div>
+            <div class="row content_canvas">
+                <div id="ranking_canvas" class="canvas_div" _echarts_instance_="ec_1542097514978" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative; background: transparent;"><div style="position: relative; overflow: hidden; width: 850px; height: 350px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="850" height="350" style="position: absolute; left: 0px; top: 0px; width: 850px; height: 350px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+                <div id="ranking_canvas1" class="canvas_div" _echarts_instance_="ec_1542097514979" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative; background: transparent;"><div style="position: relative; overflow: hidden; width: 850px; height: 350px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="850" height="350" style="position: absolute; left: 0px; top: 0px; width: 850px; height: 350px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+                <div id="ranking_canvas2" class="canvas_div" _echarts_instance_="ec_1542097514980" style="-webkit-tap-highlight-color: transparent; user-select: none; position: relative; background: transparent;"><div style="position: relative; overflow: hidden; width: 850px; height: 350px; padding: 0px; margin: 0px; border-width: 0px;"><canvas data-zr-dom-id="zr_0" width="850" height="350" style="position: absolute; left: 0px; top: 0px; width: 850px; height: 350px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas></div><div></div></div>
+            </div>
+            <div class="row content_table">
+                <table id="ranking_Table" class="table table-bordered table-hover table-condensed"></table>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<script th:src="@{https://hm.baidu.com/hm.js?696697aa5ab99eca019ba08eb7038b52}"></script>
+<script th:src="@{/static/ddms/js/main.js?t=0914}"></script>
+<script th:src="@{/static/ddms/js/login.js?t=?t=0727}"></script>
+<script th:src="@{/static/ddms/js/cite/echarts.common.min.js}"></script>
+<script th:src="@{/static/ddms/js/bootstrap/bootstrap-table.min.js}"></script>
+<script th:src="@{/static/ddms/js/bootstrap/bootstrap-table-zh-cn.min.js}"></script>
+<script th:src="@{/static/ddms/js/cite/jquery.pagination.js}"></script>
+<script th:src="@{/static/ddms/js/cite/moment.js}"></script>
+<script th:src="@{/static/ddms/js/ran1.js?t=0920}"></script>
+<script th:src="@{/static/ddms/js/ran2.js?t=0920}"></script>
+<script th:src="@{/static/ddms/js/ran3.js?t=0920}"></script>
+<script th:src="@{/static/ddms/js/ranking.js?t=0921}"></script>
+<script th:src="@{/static/ddms/js/cite/bootstrap-tagsinput.min.js}"></script>
+<script th:src="@{/static/ddms/js/form1.js?t=1542097594}"></script>
+<script th:src="@{/static/ddms/js/form2.js?t=1542097594}"></script>
+<script th:src="@{/static/ddms/js/form3.js?t=1542097594}"></script>
+<!--修改-->
+<script>
+	$('.clearfix li').click(function(){
+		var index=$(this).index();
+		$('.contents .mytable').eq(index).show().siblings().hide();
+	});
+	$('.modal-content .tab a').click(function(){
+		$(this).css('color','#556CED').siblings().css('color','#666');
+		var index=$(this).index();
+		$('.tabs .main').eq(index).show().siblings().hide();
+	});
+	var myChart1 = echarts.init(document.getElementById('main1'));
+	var myChart2 = echarts.init(document.getElementById('main2'));
+	var myChart3 = echarts.init(document.getElementById('main3'));
+        // 指定图表的配置项和数据
+        var option = {
+            xAxis: {
+	        type: 'category',
+	        data: ['一月', '二月', '三月', '四月']
+	    },
+	    yAxis : [{
+            type : 'category',
+            axisTick : {show: false},
+            data : ['第一名','第二名','第三名','第四名']
+       }],
+	    series: [{
+	        data: ['第二名', '第四名', '第三名','第一名'],
+	        type: 'line'
+	    }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart1.setOption(option);
+        myChart2.setOption(option);
+        myChart3.setOption(option);
+</script>
+<!--/修改-->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?696697aa5ab99eca019ba08eb7038b52";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+function exit() {
+    $.ajax({
+        url:'api/exituser',
+        type:'POST',
+        success:function(param){
+            if(param == 1){
+                window.location.href = "api/homepage";
+            }else{
+                alertError(param.msg)
+            }
+        },
+        error:function(){
+            alertError('系统错误')
+        }
+    });
+}
+</script>
+<div class="tool"><div class="backTop"><div class="iconRow"></div><i class="glyphicon glyphicon-arrow-up iconArrow"></i></div><div id="particles-js" style="position: absolute; top: 0px; left: 0px; z-index: -1;"><canvas class="particles-js-canvas-el" width="775" height="388" style="width: 100%; height: 100%;"></canvas></div><div class="alert-title success"><i class="glyphicon glyphicon-ok-circle" style="color: #5cb85c;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span></span></div><div class="alert-title error"><i class="glyphicon glyphicon glyphicon-remove-circle" style="color: #c9302c;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span></span></div><div class="alert-title info"><i class="glyphicon glyphicon-info-sign" style="color: #f0ad4e;"></i>&nbsp;&nbsp;&nbsp;&nbsp;<span></span></div></div></body>
+</html>

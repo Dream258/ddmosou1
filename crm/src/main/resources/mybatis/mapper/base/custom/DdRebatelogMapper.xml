@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.DdRebatelogDAO">
+
+    <!-- 根据被邀请人查询记录 -->
+    <select id="selectByTelephoneS" resultType="Integer">
+		select count(*) from dd_rebatelog where
+		user_telephone_s=#{telephone}
+	</select>
+</mapper>

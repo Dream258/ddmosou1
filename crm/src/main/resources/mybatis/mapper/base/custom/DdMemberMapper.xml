@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.DdMemberDAO">
+    <!-- 登录 -->
+    <select id="sysLogin" resultType="DdMember" >
+        select * from dd_member where user_telephone=#{user_telephone} and user_password=#{user_password}
+    </select>
+
+    <!-- 根据手机号修改会员类型 -->
+    <update id="updateUserType">
+		update dd_member set user_type = #{user_type} where
+		user_telephone = #{user_telephone}
+	</update>
+
+    <!-- 查询已邀请人数 -->
+    <select id="selectPeopleNum" resultType="int">
+		select count(*) from dd_member where
+		user_higher_id = #{id}
+	</select>
+
+    <!-- 按分页查询下级 -->
+    <select id="selectSubordinate" resultType="DdMember">
+        select * from dd_member where user_higher_id=#{user_id}
+    </select>
+
+    <!-- 查询已邀请人充值的人数 -->
+    <select id="selectPeopleNumOrders" resultType="int">
+        select count(*) from dd_orders where
+        user_telephone in
+        <foreach collection="list" open="(" close=")" separator="," index="index" item="item">
+            #{item.userTelephone, jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <!-- 修改密码 -->
+    <update id="updateUserPassword" >
+	  update dd_member set user_password = #{userPassword}  where user_telephone =  #{userTelephone}
+    </update>
+
+    <!-- 按手机号查找-->
+    <select id="sysLoginTelephone"  resultType="DdMember">
+      select * from dd_member where  user_telephone = #{user_telephone}
+     </select>
+
+    <!-- 根据邀请码查询ID -->
+    <select id="selectIDByCode" resultType="int">
+		select id from dd_member where userCode=#{userCode}
+	</select>
+
+    <!--注册-->
+    <insert id="addRegister">
+		insert into dd_member(user_telephone,user_password,user_code,user_higher_id)
+		values(#{user_telephone},#{user_password},concat('ddms',id),#{user_id})
+	</insert>
+
+    <!-- 修改邀请码 -->
+    <update id="updateCode">
+		update dd_member set user_code = #{user_code} where
+		user_telephone = #{user_telephone} and user_password=#{user_password}
+	</update>
+</mapper>

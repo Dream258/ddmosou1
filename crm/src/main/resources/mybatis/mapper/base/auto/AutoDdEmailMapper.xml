@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.AutoDdEmailDAO">
+    <!-- 返回值映射map -->
+    <resultMap id="ddEmailMapper" type="com.xxx.model.base.entity.DdEmail">
+        <result property="id" column="id" />
+        <result property="emailOpen" column="email_open" />
+        <result property="emailSm" column="email_sm" />
+        <result property="emailTp" column="email_tp" />
+        <result property="emailDz" column="email_dz" />
+        <result property="emailSf" column="email_sf" />
+        <result property="emailYzm" column="email_yzm" />
+    </resultMap>
+
+    <!-- 分页查询数据集合 -->
+    <select id="selectListByPage" resultMap="ddEmailMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+        <if test="pager!=null">
+            <include refid="pagination_tail" />
+        </if>
+    </select>
+
+    <!-- 查询总数量 -->
+    <select id="selectCount" resultType="long">
+        <include refid="count_Tail"/>
+        <include refid="where_fragement"/>
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectOne" resultMap="ddEmailMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectById" resultMap="ddEmailMapper" >
+        <include refid="selectAllColumns"/>
+        WHERE record.id = #{id}
+    </select>
+
+    <!-- 新增新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.xxx.model.base.entity.DdEmail">
+        INSERT INTO dd_email(
+            email_open,
+            email_sm,
+            email_tp,
+            email_dz,
+            email_sf,
+            email_yzm
+        ) values (
+            #{emailOpen},
+            #{emailSm},
+            #{emailTp},
+            #{emailDz},
+            #{emailSf},
+            #{emailYzm}
+        )
+    </insert>
+
+    <!-- 修改(通过ID只对不为空的内容进行修改) -->
+    <update id="updateNotNull" parameterType="com.xxx.model.base.entity.DdEmail">
+        UPDATE dd_email record
+        <include refid="update_fragement"/>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改(通过ID更新所有属性值) -->
+    <update id="updateParams" parameterType="com.xxx.model.base.entity.DdEmail">
+        UPDATE dd_email record
+        <set>
+            record.email_open = #{emailOpen},
+            record.email_sm = #{emailSm},
+            record.email_tp = #{emailTp},
+            record.email_dz = #{emailDz},
+            record.email_sf = #{emailSf},
+            record.email_yzm = #{emailYzm}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过ID删除信息 -->
+    <delete id="deleteById">
+        DELETE FROM dd_email
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 通过IDS批量删除 -->
+    <delete id="deleteByIds">
+        DELETE FROM dd_email
+        WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- /////////////////// PUBLIC SQL STR ////////////////// -->
+
+    <!-- 查询数量公共sql -->
+    <sql id="count_Tail">
+        SELECT count(1) FROM dd_email record
+    </sql>
+
+    <!-- 分页公共sql -->
+    <sql id="pagination_tail">
+        <if test="pager.orderBy != null and pager.orderBy != ''">
+            ORDER  BY  ${pager.orderBy}
+        </if>
+        limit #{pager.index} , #{pager.pageSize}
+    </sql>
+
+    <!-- 查询字段公共sql -->
+    <sql id="selectAllColumns">
+        <![CDATA[
+			SELECT
+				id,
+				email_open,
+				email_sm,
+				email_tp,
+				email_dz,
+				email_sf,
+				email_yzm
+			FROM dd_email record
+		]]>
+    </sql>
+
+    <sql id="where_fragement">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND record.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.emailOpen != null">
+                <![CDATA[ AND record.email_open = #{entity.emailOpen} ]]>
+            </if>
+            <if test = "entity.emailSm != null and entity.emailSm != ''">
+                <![CDATA[ AND record.email_sm = #{entity.emailSm} ]]>
+            </if>
+            <if test = "entity.emailTp != null and entity.emailTp != ''">
+                <![CDATA[ AND record.email_tp = #{entity.emailTp} ]]>
+            </if>
+            <if test = "entity.emailDz != null and entity.emailDz != ''">
+                <![CDATA[ AND record.email_dz = #{entity.emailDz} ]]>
+            </if>
+            <if test = "entity.emailSf != null and entity.emailSf != ''">
+                <![CDATA[ AND record.email_sf = #{entity.emailSf} ]]>
+            </if>
+            <if test = "entity.emailYzm != null and entity.emailYzm != ''">
+                <![CDATA[ AND record.email_yzm = #{entity.emailYzm} ]]>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 公共修改sql-->
+    <sql id="update_fragement">
+        <set>
+            <if test = "emailOpen != null ">
+                record.email_open = #{emailOpen},
+            </if>
+            <if test = "emailSm != null and emailSm != ''">
+                record.email_sm = #{emailSm},
+            </if>
+            <if test = "emailTp != null and emailTp != ''">
+                record.email_tp = #{emailTp},
+            </if>
+            <if test = "emailDz != null and emailDz != ''">
+                record.email_dz = #{emailDz},
+            </if>
+            <if test = "emailSf != null and emailSf != ''">
+                record.email_sf = #{emailSf},
+            </if>
+            <if test = "emailYzm != null and emailYzm != ''">
+                record.email_yzm = #{emailYzm}
+            </if>
+        </set>
+    </sql>
+    <!-- /////////////////// PUBLIC SQL END ////////////////// -->
+</mapper>

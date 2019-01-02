@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.sys.dao.AutoSysDepartmentDAO">
+    <!-- 返回值映射map -->
+    <resultMap id="sysDepartmentMapper" type="com.xxx.model.sys.entity.SysDepartment">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
+        <result property="fid" column="fid" />
+        <result property="sort" column="sort" />
+        <result property="remarks" column="remarks" />
+        <result property="status" column="status" />
+        <result property="level" column="level" />
+    </resultMap>
+
+    <!-- 查询数据集合 -->
+    <select id="selectListAll" resultMap="sysDepartmentMapper" >
+        <include refid="selectAllColumns" />
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 分页查询数据集合 -->
+    <select id="selectListByPage" resultMap="sysDepartmentMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+        <if test="pager!=null">
+            <include refid="pagination_tail" />
+        </if>
+    </select>
+
+    <!-- 查询总数量 -->
+    <select id="selectCount" resultType="long">
+        <include refid="count_Tail"/>
+        <include refid="where_fragement"/>
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectOne" resultMap="sysDepartmentMapper" >
+        <include refid="selectAllColumns"/>
+        <include refid="where_fragement" />
+    </select>
+
+    <!-- 单条查询 -->
+    <select id="selectById" resultMap="sysDepartmentMapper" >
+        <include refid="selectAllColumns"/>
+        WHERE record.id = #{id}
+    </select>
+
+    <!-- 新增鏂板 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.xxx.model.sys.entity.SysDepartment">
+        INSERT INTO sys_department(
+            name,
+            fid,
+            sort,
+            remarks,
+            status,
+            level
+        ) values (
+            #{name},
+            #{fid},
+            #{sort},
+            #{remarks},
+            #{status},
+            #{level}
+        )
+    </insert>
+
+    <!-- 修改(通过ID只对不为空的内容进行修改) -->
+    <update id="updateNotNull" parameterType="com.xxx.model.sys.entity.SysDepartment">
+        UPDATE sys_department record
+        <include refid="update_fragement"/>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 修改(通过ID更新所有属性值) -->
+    <update id="updateParams" parameterType="com.xxx.model.sys.entity.SysDepartment">
+        UPDATE sys_department record
+        <set>
+            record.name = #{name},
+            record.fid = #{fid},
+            record.sort = #{sort},
+            record.remarks = #{remarks},
+            record.status = #{status},
+            record.level = #{level}
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 通过ID删除信息 -->
+    <delete id="deleteById">
+        DELETE FROM sys_department
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 通过IDS批量删除 -->
+    <delete id="deleteByIds">
+        DELETE FROM sys_department
+        WHERE id IN
+        <foreach collection="ids" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- /////////////////// PUBLIC SQL STR ////////////////// -->
+
+    <!-- 查询数量公共sql -->
+    <sql id="count_Tail">
+        SELECT count(1) FROM sys_department record
+    </sql>
+
+    <!-- 分页公共sql -->
+    <sql id="pagination_tail">
+        <if test="pager.orderBy != null and pager.orderBy != ''">
+            ORDER  BY  ${pager.orderBy}
+        </if>
+        limit #{pager.index} , #{pager.pageSize}
+    </sql>
+
+    <!-- 查询字段公共sql -->
+    <sql id="selectAllColumns">
+        <![CDATA[
+			SELECT
+				id,
+				name,
+				fid,
+				sort,
+				remarks,
+				status,
+				level
+			FROM sys_department record
+		]]>
+</sql>
+
+    <sql id="where_fragement">
+        WHERE 1=1
+        <if test="entity!=null">
+            <if test = "entity.id != null">
+                <![CDATA[ AND record.id = #{entity.id} ]]>
+            </if>
+            <if test = "entity.name != null and entity.name != ''">
+                <![CDATA[ AND record.name LIKE concat('%',#{entity.name},'%') ]]>
+            </if>
+            <if test = "entity.fid != null">
+                <![CDATA[ AND record.fid = #{entity.fid} ]]>
+            </if>
+            <if test = "entity.sort != null">
+                <![CDATA[ AND record.sort = #{entity.sort} ]]>
+            </if>
+            <if test = "entity.remarks != null and entity.remarks != ''">
+                <![CDATA[ AND record.remarks = #{entity.remarks} ]]>
+            </if>
+            <if test = "entity.status != null">
+                <![CDATA[ AND record.status = #{entity.status} ]]>
+            </if>
+            <if test = "entity.level != null">
+                <![CDATA[ AND record.level = #{entity.level} ]]>
+            </if>
+        </if>
+    </sql>
+
+    <!-- 公共修改sql-->
+    <sql id="update_fragement">
+        <set>
+            <if test = "name != null and name != ''">
+                record.name = #{name},
+            </if>
+            <if test = "fid != null ">
+                record.fid = #{fid},
+            </if>
+            <if test = "sort != null ">
+                record.sort = #{sort},
+            </if>
+            <if test = "remarks != null and remarks != ''">
+                record.remarks = #{remarks},
+            </if>
+            <if test = "status != null ">
+                record.status = #{status}
+            </if>
+            <if test = "level != null ">
+                record.level = #{level}
+            </if>
+        </set>
+    </sql>
+    <!-- /////////////////// PUBLIC SQL END ////////////////// -->
+</mapper>

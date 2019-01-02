@@ -1,0 +1,440 @@
+.fun_btn_group>.nav>li, .icon_box, .number_box, .number_box>.number,
+	.number_box>p {
+	text-align: center
+}
+
+#text_copy{
+	float: left;
+	width: 550px;
+	margin: 10px 50px;
+	height: 80px
+}
+
+.user_number .swiper-slide {
+	background: #fff;
+	border-radius: 6px;
+	cursor: -webkit-grab;
+	cursor: grab;
+	height: 138px
+}
+
+.user_number .swiper-slide .bottom {
+	padding: 0 15px;
+	margin-top: 15px;
+	text-align: center;
+	color: #556CED;
+	font-size: 12px
+}
+
+.number_box .plug_limit i {
+	color: green;
+	font-size: 30px
+}
+
+.icon_box {
+	width: 80px;
+	height: 80px;
+	float: left;
+	border-radius: 50%;
+	line-height: 80px;
+	border: 1px solid #f5f5f5;
+	margin: 20px 10px 0
+}
+
+.icon_box>.iconfont {
+	font-size: 36px
+}
+
+.icon_box>img {
+	width: 50px;
+	height: 50px;
+	margin-top: -10px
+}
+
+.number_box>.number {
+	font-size: 24px;
+	margin: 20px 0;
+	color: #556CED;
+	letter-spacing: 0
+}
+
+.number_box>p {
+	font-size: 14px;
+	color: #989A9C;
+	letter-spacing: 0
+}
+
+.number_box>p>span {
+	color: #999;
+	font-size: 12px
+}
+
+.user_num_hea {
+	padding: 15px 0;
+	font-size: 15px;
+	color: #343434;
+	letter-spacing: 0
+}
+
+.user_num_hea::after {
+	content: ' ';
+	display: block;
+	width: 10px;
+	margin-right: 10px;
+	background: #343434;
+	float: left;
+	height: 17px
+}
+
+.user_wrap {
+	padding: 0 15px 30px;
+	background: #F6F7FE;
+	margin-left: 225px
+}
+
+.fun_title {
+	padding: 5px;
+	margin-bottom: 10px;
+	font-size: 15px
+}
+
+.fun_btn_group>.nav-tabs {
+	height: 42px
+}
+
+.fun_btn_group>.nav>li {
+	width: 140px
+}
+
+.fun_btn_group>.nav>li.active>a {
+	color: #556CED
+}
+
+.fun_btn_group>.nav>li>a:hover {
+	color: #556CED;
+	background: #f6f7fe
+}
+
+.fun_btn_group>.nav>li.active>a:hover, .vip_wrap {
+	background: #fff
+}
+
+.vip_wrap {
+	line-height: 34px;
+	padding: 40px 30px;
+	position: relative
+}
+
+.vip_wrap .vip_row {
+	margin-bottom: 5px
+}
+
+.vip_wrap .vip_row .input_box1 {
+	display: none
+}
+
+.vip_wrap .vip_row .input_box1.alone_kr {
+	display: block
+}
+
+.vip_wrap .time_row.alone_kr, .vip_wrap .vip_row .input_box.alone_kr {
+	display: none
+}
+
+.vip_wrap .vip_row .alone_kr_btn, .vip_wrap .vip_row .vip_kr_btn {
+	background: #556CED;
+	color: #fff
+}
+
+.vip_wrap .item_name {
+	float: left;
+	width: 180px;
+	text-align: right;
+	padding-right: 20px
+}
+
+.item_option {
+	margin-left: 180px
+}
+
+.item_option .cj_p {
+	font-size: 12px;
+	line-height: 1.5
+}
+
+.num_input, .num_input1 {
+	display: inline-block;
+	width: 100px;
+	margin: 0 5px;
+	text-align: center
+}
+
+.pay_type_btn, .vip_time_btn {
+	width: 90px;
+	margin-right: 10px;
+	height: 34px;
+	padding: 0;
+	line-height: 34px
+}
+
+.price_before {
+	text-decoration: line-through
+}
+
+.vip_wrap .item_option>span {
+	color: #556CED
+}
+
+.vip_wrap .item_option>.fun_explain {
+	color: red;
+	font-size: 12px
+}
+
+.vip_time_btn {
+	background: #fff;
+	color: #0D253E;
+	border: 1px solid #999
+}
+
+.vip_time_btn.active {
+	background: #556CED;
+	color: #fff;
+	border: 1px solid #556CED
+}
+
+.pay_type_btn {
+	background: #fff;
+	color: #0D253E;
+	border: 1px solid #999
+}
+
+.pay_type_btn.active {
+	background: #556CED;
+	color: #fff;
+	border: 1px solid #556CED
+}
+
+.vip_buy_btn {
+	margin: 30px 50px;
+	width: 120px;
+	height: 34px;
+	padding: 0;
+	line-height: 34px;
+	background: #556CED;
+	color: #fff !important;
+	border: #556CED
+}
+
+#shopName {
+	display: inline-block;
+	width: 350px
+}
+
+#shopName.error {
+	border-color: #ff1b08
+}
+
+.explain_footer h4 {
+	margin: 10px 0;
+	color: #556CED
+}
+
+.fixed-table-container {
+	clear: inherit
+}
+
+.share_list_wrap .share_hea {
+	padding: 20px 0
+}
+
+.share_list_wrap .share_limit {
+	margin-bottom: 10px
+}
+
+.share_list_wrap .share_url_box {
+	font-size: 15px
+}
+
+.share_list_wrap #share_code_input {
+	float: left;
+	width: 550px;
+	margin: 10px 50px;
+	height: 80px
+}
+
+.share_list_wrap .copy_btn {
+	width: 92px;
+	background: #556CED;
+	color: #fff;
+	margin: 30px 0
+}
+
+.share_list_wrap .share_code_wrap {
+	height: 150px;
+	padding-top: 20px
+}
+
+.share_list_wrap .share_table_box {
+	margin: 20px 0
+}
+
+.share_list_wrap .share_table_box1 {
+	margin: 0
+}
+
+.share_list_wrap .share_table_box .table_box {
+	background: #fff;
+	padding: 10px
+}
+
+.share_list_wrap .share_table_box>h3 {
+	border-bottom: 1px solid #ccc
+}
+
+.share_list_wrap .share_table_box>h3>.btn {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	height: 40px;
+	line-height: 40px;
+	padding: 0;
+	margin-top: 10px;
+	background: #fff;
+	border: 1px solid #ccc;
+	width: 120px;
+	font-size: 16px;
+	margin-bottom: -1px;
+	margin-left: -1px;
+	color: #556CED;
+	border-bottom: none
+}
+
+.share_list_wrap .table_box>p {
+	padding: 20px 0
+}
+
+.fixed-table-container thead th .th-inner, .table .fixed-table-container tbody td .th-inner
+	{
+	line-height: .5
+}
+
+.share_list_wrap .share_table_box .table_box.buy_table_box {
+	padding: 30px 10px
+}
+
+.pay-wrapper {
+	width: 574px;
+	min-height: 370px;
+	margin: 0 auto;
+	background: #fff;
+	border: 1px solid #D8DDE6;
+	border-radius: 4px;
+	overflow: hidden
+}
+
+.pay-wrapper .pay-header {
+	width: 100%;
+	background: #F4F6F9;
+	border-bottom: 1px solid #D8DDE6;
+	height: 40px;
+	text-align: left;
+	margin-bottom: 30px
+}
+
+.pay-wrapper .pay-header .pay-password-btn {
+	border-radius: 0;
+	height: 100%;
+	margin: 0;
+	background: 0 0;
+	float: left;
+	outline: 0;
+	display: none
+}
+
+.pay-wrapper .pay-header .pay-password-btn.activeBtn {
+	background: #fff;
+	height: 41px;
+	border-right: 1px solid #D8DDE6
+}
+
+.pay-wrapper .pay-header .login-password-btn {
+	border-radius: 0;
+	height: 100%;
+	margin: 0;
+	background: 0 0;
+	float: left;
+	outline: 0;
+	border-right: 1px solid #D8DDE6
+}
+
+.pay-wrapper .pay-header .login-password-btn.activeBtn {
+	background: #fff;
+	height: 41px
+}
+
+.pay-wrapper .row {
+	padding: 5px 0
+}
+
+.pay-wrapper .pay-name {
+	width: 25%;
+	text-align: right;
+	padding-right: 10px;
+	float: left;
+	line-height: 30px
+}
+
+.pay-wrapper .pay-option {
+	position: relative;
+	width: 75%;
+	text-align: left;
+	float: left
+}
+
+.pay-wrapper .pay-option input {
+	width: 80%;
+	border-radius: 0
+}
+
+.pay-wrapper .pay-option .success-info, .pay-wrapper .pay-option i.error-info
+	{
+	position: absolute;
+	right: 20%;
+	font-size: 21px;
+	color: #4ec27f;
+	margin: 5px
+}
+
+.pay-wrapper .pay-option i.error-info {
+	color: red;
+	margin: 3px
+}
+
+.pay-wrapper .pay-option .error-info {
+	font-size: 12px;
+	color: red;
+	padding-top: 3px
+}
+
+.pay-wrapper .loginPasswordSubmit, .pay-wrapper .payPasswordSubmit {
+	background: #556CED;
+	border-radius: 4px;
+	width: 120px;
+	height: 40px;
+	color: #fff;
+	outline: 0
+}
+
+.iconfont.icon-VIP {
+	color: #ff8100;
+	font-size: 20px;
+	position: absolute;
+	margin-top: -4px
+}
+
+.trend_table_wrap .iconfont.icon-VIP {
+	margin-top: 0
+}
+
+.pay-wrapper .pay-form {
+	display: none
+}

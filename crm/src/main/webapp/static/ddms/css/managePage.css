@@ -1,0 +1,16 @@
+.a_page{
+	margin: 1px;
+	padding: 2px ;
+	font-size: 15px;
+	display: inline-block;
+	background-color: #dcd9ba;
+	border: 1px solid #d0bb66;
+	text-align: center;
+	width: 20px;
+	height: 20px;
+	color: white;
+}
+.a_page:hover {
+	background-color: #fdf599;
+	color: black;
+}

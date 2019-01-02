@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxx.model.base.dao.DdOrdersDAO">
+    <!--根据手机号查询订单-->
+    <select id="getOrdersByTelephone" resultType="DdOrders">
+		select * from dd_orders where user_telephone=#{userTelephone}
+	</select>
+
+    <!-- 分页查询 -->
+    <select id="getOrdersByTelephoneForPage" resultType="DdOrders">
+		select * from dd_orders where user_telephone=#{telephone}
+
+	</select>
+
+    <!-- 查询用户订单的数量 -->
+    <select id="getOrdersCountByPhone" resultType="Integer">
+		select count(*) from dd_orders where user_telephone=#{telephone}
+	</select>
+</mapper>
